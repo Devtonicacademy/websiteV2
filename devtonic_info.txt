@@ -199,4 +199,4 @@
     handle: "@elvis-eyobor-3582",
     role: "Community Moderator",
     level: "Level 6 - Purple Belt"
-}
+}]

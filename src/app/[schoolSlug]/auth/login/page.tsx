@@ -46,28 +46,32 @@ function ForgotPasswordDialog({ schoolSlug }: ForgotPasswordProps) {
     }
     setResetLoading(true);
     try {
-      // 1. Check Firestore to see if the user is even registered/invited
-      const { collection, query, where, getDocs } = await import("firebase/firestore");
-      const { db } = await import("@/lib/firebase");
+      const SUPER_ADMIN_EMAIL = "devtonicllc@gmail.com";
+      
+      if (cleanEmail !== SUPER_ADMIN_EMAIL) {
+        // 1. Check Firestore to see if the user is even registered/invited
+        const { collection, query, where, getDocs } = await import("firebase/firestore");
+        const { db } = await import("@/lib/firebase");
 
-      const usersRef = collection(db, "schools", schoolSlug, "users");
-      const q = query(usersRef, where("email", "==", cleanEmail));
-      const querySnapshot = await getDocs(q);
+        const usersRef = collection(db, "schools", schoolSlug, "users");
+        const q = query(usersRef, where("email", "==", cleanEmail));
+        const querySnapshot = await getDocs(q);
 
-      if (querySnapshot.empty) {
-        toast.error("Account not found. Please contact your administrator.");
-        setResetLoading(false);
-        return;
-      }
+        if (querySnapshot.empty) {
+          toast.error("Account not found. Please contact your administrator.");
+          setResetLoading(false);
+          return;
+        }
 
-      const userData = querySnapshot.docs[0].data();
+        const userData = querySnapshot.docs[0].data();
 
-      // 2. Check if they have actually signed up (created a password) or just invited
-      // If invited is true or they don't have a UID yet, they need to Sign Up first
-      if (userData.invited !== false) {
-        toast.error("You haven't completed your registration yet. Please 'Sign Up' first.");
-        setResetLoading(false);
-        return;
+        // 2. Check if they have actually signed up (created a password) or just invited
+        // If invited is true or they don't have a UID yet, they need to Sign Up first
+        if (userData.invited !== false) {
+          toast.error("You haven't completed your registration yet. Please 'Sign Up' first.");
+          setResetLoading(false);
+          return;
+        }
       }
 
       // 3. Send the actual reset email
@@ -149,7 +153,14 @@ export default function LoginPage({ params }: { params: Promise<{ schoolSlug: st
     setLoading(true);
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      toast.success("Welcome back!");
+      
+      const SUPER_ADMIN_EMAIL = "devtonicllc@gmail.com";
+      if (email.toLowerCase().trim() === SUPER_ADMIN_EMAIL) {
+        toast.success("Super Admin recognized");
+      } else {
+        toast.success("Welcome back!");
+      }
+      
       router.push(`/${schoolSlug}/dashboard`);
     } catch (err: any) {
       console.error("Login Error:", err);

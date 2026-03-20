@@ -1,8 +1,8 @@
 
         /* Update the :root variables */
         :root {
-            --primary: #5D3FD3;
-            --primary-dark: #4B32A8;
+            --primary: #FF8A3D;
+            --primary-dark: #E67A2E;
             --secondary: #FF8A3D;
             --bg-dark: #1A0B2E;
             --bg-light: #ffffff;
@@ -40,9 +40,9 @@
         }
 
         .header {
-            background: rgba(0, 0, 0, 0.5);
+            /* Remove fixed background to let Tailwind handle scroll states */
             backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         }
         
         .accordion-item {
@@ -267,7 +267,7 @@
         }
         
         .testimonial {
-            border-left: 4px solid #8F2C86;
+            border-left: 4px solid #FF8A3D;
         }
         
         a.text-blue-600 {
@@ -279,7 +279,7 @@
         }
         
         .fas {
-            color: #8F2C86;
+            color: #FF8A3D;
         }
         
         /* Update table header */
@@ -289,11 +289,11 @@
         
         /* Footer update */
         .bg-gray-800 {
-            background-color: #8F2C86;
+            background-color: #FF8A3D;
         }
 
         .course-card button {
-            background: linear-gradient(90deg, #8F2C86, #aa4ca3);
+            background: linear-gradient(90deg, #FF8A3D, #aa4ca3);
             transition: transform 0.2s, box-shadow 0.2s;
         }
 
@@ -335,7 +335,7 @@
         }
 
         #theme-toggle.light {
-            background-color: #8F2C86;
+            background-color: #FF8A3D;
         }
 
         #theme-toggle.light span {
@@ -367,7 +367,7 @@
 
         #courseModal .bg-white {
             scrollbar-width: thin;
-            scrollbar-color: #8F2C86 #f1f1f1;
+            scrollbar-color: #FF8A3D #f1f1f1;
         }
 
         #courseModal .bg-white::-webkit-scrollbar {
