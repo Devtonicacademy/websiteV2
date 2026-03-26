@@ -11,18 +11,23 @@ import {
   updateDoc,
   arrayUnion,
   Timestamp,
+  addDoc,
+  serverTimestamp,
+  where,
 } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { useAuth } from "@/components/auth-provider";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { BookOpen, CheckCircle, Circle, PlayCircle, FileText, File } from "lucide-react";
+import { BookOpen, CheckCircle, Circle, PlayCircle, FileText, File, Award } from "lucide-react";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import CourseSchedule from "@/components/course/course-schedule";
 import StudentNotes from "@/components/course/student-notes";
+import { DashboardTopbar } from "@/components/dashboard-topbar";
+import { generateCertificate } from "@/lib/generate-certificate";
 
 interface AttendanceLogEntry {
   id: string;
@@ -53,6 +58,7 @@ export default function CourseDetailPage({
   const [course, setCourse] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [enrolling, setEnrolling] = useState(false);
+  const [enrollmentStatus, setEnrollmentStatus] = useState<"none" | "pending" | "approved" | "declined">("none");
   const [myAttendanceLogs, setMyAttendanceLogs] = useState<AttendanceLogEntry[]>([]);
   const [allLogs, setAllLogs] = useState<AttendanceLogEntry[]>([]);
   const [logsLoading, setLogsLoading] = useState(false);
@@ -73,6 +79,27 @@ export default function CourseDetailPage({
     }
     fetchCourse();
   }, [schoolSlug, courseId]);
+
+  // Check if student has a pending/approved/declined enrollment request
+  useEffect(() => {
+    if (!user || !isStudent) return;
+    async function checkEnrollmentRequest() {
+      try {
+        const q = query(
+          collection(db, "schools", schoolSlug, "enrollmentRequests"),
+          where("courseId", "==", courseId),
+          where("studentId", "==", user!.uid)
+        );
+        const snap = await getDocs(q);
+        if (!snap.empty) {
+          setEnrollmentStatus(snap.docs[0].data().status as any);
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    checkEnrollmentRequest();
+  }, [user, isStudent, schoolSlug, courseId]);
 
   // Load attendance logs
   useEffect(() => {
@@ -114,12 +141,20 @@ export default function CourseDetailPage({
     if (!user) { toast.error("Please log in to enroll"); return; }
     setEnrolling(true);
     try {
-      const ref = doc(db, "schools", schoolSlug, "courses", courseId);
-      await updateDoc(ref, { enrolledStudents: arrayUnion(user.uid) });
-      setCourse({ ...course, enrolledStudents: [...(course.enrolledStudents || []), user.uid] });
-      toast.success("Successfully enrolled!");
+      // Submit enrollment request instead of directly enrolling
+      await addDoc(collection(db, "schools", schoolSlug, "enrollmentRequests"), {
+        courseId,
+        courseName: course.title,
+        studentId: user.uid,
+        studentName: user.displayName || user.email || "Student",
+        studentEmail: user.email || "",
+        status: "pending",
+        requestedAt: serverTimestamp(),
+      });
+      setEnrollmentStatus("pending");
+      toast.success("Enrollment request submitted! Waiting for admin approval.");
     } catch (err: any) {
-      toast.error(err.message || "Failed to enroll");
+      toast.error(err.message || "Failed to submit enrollment request");
     } finally {
       setEnrolling(false);
     }
@@ -173,7 +208,14 @@ export default function CourseDetailPage({
   const allModules = course.sections ? course.sections.flatMap((s: any) => s.modules || []) : (course.modules || []);
   const completedCount = allModules.filter((m: any) => m.completedBy?.includes(user?.uid)).length || 0;
   const totalModules = allModules.length || 0;
-  const progressPercent = totalModules > 0 ? Math.round((completedCount / totalModules) * 100) : 0;
+
+  const allQuizzes = course.sections ? course.sections.filter((s: any) => s.quiz && s.quiz.questions?.length > 0) : [];
+  const passedQuizzesCount = allQuizzes.filter((s: any) => s.quiz.passedBy?.some((p: any) => p.uid === user?.uid)).length || 0;
+  
+  const totalItems = totalModules + allQuizzes.length;
+  const completedItems = completedCount + passedQuizzesCount;
+  const progressPercent = totalItems > 0 ? Math.round((completedItems / totalItems) * 100) : 0;
+  const isFullyCompleted = progressPercent === 100 && totalItems > 0;
 
   // Build tabs list based on role
   const tabs = [
@@ -184,7 +226,9 @@ export default function CourseDetailPage({
   ].filter((t) => t.show);
 
   return (
-    <div className="container mx-auto py-10 px-4 max-w-4xl">
+    <div className="flex flex-col flex-1 w-full">
+      <DashboardTopbar breadcrumb={`Course Catalog / ${course.title}`} />
+      <div className="p-8 max-w-5xl mx-auto w-full">
       <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}>
         {/* Header */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 gap-4">
@@ -197,17 +241,44 @@ export default function CourseDetailPage({
               <div className="bg-primary/10 border border-primary/20 rounded-lg p-4 text-center">
                 <div className="text-sm font-medium text-primary mb-1">Your Progress</div>
                 <div className="text-2xl font-bold">{progressPercent}%</div>
-                <div className="w-full bg-primary/20 h-2 rounded-full mt-2 overflow-hidden">
+                <div className="w-full bg-primary/20 h-2 rounded-full mt-2 mb-3 overflow-hidden">
                   <div className="bg-primary h-full transition-all duration-500" style={{ width: `${progressPercent}%` }} />
                 </div>
+                {isFullyCompleted && isStudent && (
+                  <Button
+                    size="sm"
+                    variant="default"
+                    className="w-full gap-2 mt-2 bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-white shadow-md border-0"
+                    onClick={() => {
+                      generateCertificate({
+                        studentName: user?.displayName || user?.email || "Student",
+                        courseName: course.title,
+                        completionDate: new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" }),
+                        schoolName: schoolSlug.replace(/-/g, " ").replace(/\b\w/g, (l: string) => l.toUpperCase()),
+                      });
+                    }}
+                  >
+                    <Award className="w-4 h-4" /> Download Certificate
+                  </Button>
+                )}
               </div>
             ) : canManage ? (
               <Link href={`/${schoolSlug}/admin/courses/new`}>
                 <Button variant="outline" size="lg">Edit Course</Button>
               </Link>
+            ) : enrollmentStatus === "pending" ? (
+              <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-4 text-center">
+                <div className="text-sm font-medium text-yellow-700 dark:text-yellow-400 mb-1">⏳ Pending Approval</div>
+                <p className="text-xs text-muted-foreground">Your enrollment request is awaiting admin review.</p>
+              </div>
+            ) : enrollmentStatus === "declined" ? (
+              <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4 text-center">
+                <div className="text-sm font-medium text-red-700 dark:text-red-400 mb-1">❌ Request Declined</div>
+                <p className="text-xs text-muted-foreground">Contact administration for more information.</p>
+              </div>
             ) : (
               <Button size="lg" className="w-full md:w-auto" onClick={handleEnroll} disabled={enrolling}>
-                {enrolling ? "Enrolling..." : "Enroll Now"}
+                {enrolling ? "Submitting..." : "Request Enrollment"}
               </Button>
             )}
           </div>
@@ -215,7 +286,7 @@ export default function CourseDetailPage({
 
         {/* Tabs */}
         <Tabs defaultValue="content">
-          <TabsList className={`grid w-full mb-6 grid-cols-${tabs.length}`}>
+          <TabsList className="flex w-full mb-6">
             {tabs.map((t) => (
               <TabsTrigger key={t.id} value={t.id}>{t.label}</TabsTrigger>
             ))}
@@ -315,6 +386,44 @@ export default function CourseDetailPage({
                             </Card>
                           );
                         })}
+                        
+                        {section.quiz && section.quiz.questions?.length > 0 && (
+                          <Card className={`overflow-hidden transition-all duration-300 hover:shadow-md ${user && section.quiz.passedBy?.some((p:any) => p.uid === user?.uid) ? "bg-green-500/10 border-green-500/30" : "hover:border-primary/30"}`}>
+                            <CardHeader className="py-4 flex flex-row items-center gap-4">
+                              {isEnrolled && (
+                                <div className="shrink-0 z-10">
+                                  {user && section.quiz.passedBy?.some((p:any) => p.uid === user?.uid) ? (
+                                    <CheckCircle className="h-6 w-6 text-green-500 fill-green-500/10" />
+                                  ) : (
+                                    <Circle className="h-6 w-6 text-muted-foreground transition-colors" />
+                                  )}
+                                </div>
+                              )}
+                              <Link href={`/${schoolSlug}/courses/${courseId}/quiz/${sIdx}`} className="flex-1 group">
+                                <CardTitle className="text-base font-semibold flex items-center gap-3 lg:group-hover:text-primary transition-colors">
+                                  <div className="p-1.5 rounded-md bg-background border border-border/50 shadow-sm group-hover:border-primary/30 transition-colors">
+                                    <FileText className="h-4 w-4 text-indigo-500" />
+                                  </div>
+                                   Section Quiz
+                                </CardTitle>
+                              </Link>
+                            </CardHeader>
+                            {isEnrolled && (
+                               <Link href={`/${schoolSlug}/courses/${courseId}/quiz/${sIdx}`}>
+                                 <CardContent className="pt-0 pb-5 px-6 border-t border-border/5 text-sm cursor-pointer hover:bg-muted/10 transition-colors group">
+                                   <div className="mt-4 flex items-center justify-between">
+                                     <div className="inline-flex items-center gap-2 text-indigo-500 font-medium group-hover:underline">
+                                       Take Quiz ({section.quiz.questions.length} questions)
+                                     </div>
+                                     <div className="text-xs font-bold text-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity">
+                                       Start →
+                                     </div>
+                                   </div>
+                                 </CardContent>
+                               </Link>
+                            )}
+                          </Card>
+                        )}
                       </div>
                     </div>
                   ))}
@@ -497,6 +606,7 @@ export default function CourseDetailPage({
           )}
         </Tabs>
       </motion.div>
+      </div>
     </div>
   );
 }

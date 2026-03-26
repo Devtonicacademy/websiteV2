@@ -152,19 +152,36 @@ export default function LoginPage({ params }: { params: Promise<{ schoolSlug: st
     e.preventDefault();
     setLoading(true);
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
       
       const SUPER_ADMIN_EMAIL = "devtonicllc@gmail.com";
       if (email.toLowerCase().trim() === SUPER_ADMIN_EMAIL) {
         toast.success("Super Admin recognized");
-      } else {
-        toast.success("Welcome back!");
+        router.push(`/${schoolSlug}/dashboard`);
+        return;
       }
+
+      const { doc, getDoc } = await import("firebase/firestore");
+      const { db } = await import("@/lib/firebase");
       
+      const userDocRef = doc(db, "schools", schoolSlug, "users", userCredential.user.uid);
+      const userDoc = await getDoc(userDocRef);
+      
+      if (!userDoc.exists()) {
+        await auth.signOut();
+        toast.error("Access denied. Your account has been removed or not found.");
+        return;
+      }
+
+      toast.success("Welcome back!");
       router.push(`/${schoolSlug}/dashboard`);
     } catch (err: any) {
       console.error("Login Error:", err);
-      toast.error("Invalid email or password");
+      if (err.code === "auth/invalid-credential") {
+        toast.error("Invalid email or password. If you haven't yet, please Sign Up first.");
+      } else {
+        toast.error("Invalid email or password");
+      }
     } finally {
       setLoading(false);
     }

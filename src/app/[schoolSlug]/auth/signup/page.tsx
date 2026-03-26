@@ -26,42 +26,55 @@ export default function SignupPage({ params }: { params: Promise<{ schoolSlug: s
         e.preventDefault();
         setLoading(true);
         try {
-            // ─── 1. Restricted Access Check ─────────────────────────────────────
             const { collection, query, where, getDocs, deleteDoc } = await import("firebase/firestore");
+            const SUPER_ADMIN_EMAIL = "devtonicllc@gmail.com";
+            const cleanEmail = email.toLowerCase().trim();
+            const isSuperAdmin = cleanEmail === SUPER_ADMIN_EMAIL;
+
+            // ─── 1. Check if email already signed up ────────────────────────────
             const usersRef = collection(db, "schools", schoolSlug, "users");
-            const q = query(usersRef, where("email", "==", email.toLowerCase().trim()));
+            const q = query(usersRef, where("email", "==", cleanEmail));
             const querySnapshot = await getDocs(q);
 
-            if (querySnapshot.empty) {
-                toast.error("This email is not registered. Please contact your administrator.");
-                setLoading(false);
-                return;
+            // If a doc already exists and they have already completed signup (not just invited), block re-registration
+            if (!querySnapshot.empty) {
+                const existingData = querySnapshot.docs[0].data();
+                if (existingData.invited === false) {
+                    toast.error("An account with this email already exists. Please sign in instead.");
+                    setLoading(false);
+                    return;
+                }
             }
 
-            const existingDoc = querySnapshot.docs[0];
-            const userData = existingDoc.data();
+            // Use existing invite doc data if found, otherwise default to student
+            const existingDoc = !querySnapshot.empty ? querySnapshot.docs[0] : null;
+            const userData = existingDoc
+                ? existingDoc.data()
+                : { role: isSuperAdmin ? "admin" : "student", email: cleanEmail };
 
             // ─── 2. Create user in Firebase Auth ────────────────────────────────
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
 
             // ─── 3. Sync Profile and Data ───────────────────────────────────────
-            await updateProfile(user, { displayName: name || userData.displayName });
+            await updateProfile(user, { displayName: name || userData.displayName || name });
 
-            // Copy data to a doc indexed by the real UID
             await setDoc(doc(db, "schools", schoolSlug, "users", user.uid), {
                 ...userData,
-                displayName: name || userData.displayName,
+                displayName: name || userData.displayName || name,
+                email: cleanEmail,
                 uid: user.uid,
+                role: userData.role ?? "student",
                 invited: false,
+                createdAt: serverTimestamp(),
                 updatedAt: serverTimestamp(),
             });
 
-            if (existingDoc.id !== user.uid) {
+            if (existingDoc && existingDoc.id !== user.uid) {
                 await deleteDoc(existingDoc.ref);
             }
 
-            toast.success("Account created successfully!");
+            toast.success("Welcome! Your account has been created.");
             router.push(`/${schoolSlug}/dashboard`);
         } catch (err: any) {
             toast.error(err.message || "Failed to create account");
@@ -171,7 +184,7 @@ export default function SignupPage({ params }: { params: Promise<{ schoolSlug: s
                 {/* Secure footer info */}
                 <div className="mt-8 flex items-center justify-center gap-6 opacity-40 grayscale grayscale hover:opacity-80 transition-opacity cursor-default">
                     <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest">
-                        <UserPlus className="w-3 h-3" /> Invitation Only
+                        <UserPlus className="w-3 h-3" /> Open Enrollment
                     </div>
                 </div>
             </motion.div>

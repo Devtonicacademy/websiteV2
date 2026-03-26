@@ -1,4 +1,6 @@
 import { DashboardSidebar } from "@/components/dashboard-sidebar";
+import { SidebarProvider } from "@/components/sidebar-context";
+import { SidebarContentWrapper } from "@/components/sidebar-content-wrapper";
 
 export default async function AdminLayout({
     children,
@@ -10,9 +12,11 @@ export default async function AdminLayout({
     const { schoolSlug } = await params;
 
     return (
-        <div className="flex min-h-screen w-full flex-col bg-muted/20">
-            <DashboardSidebar schoolSlug={schoolSlug} />
-            <div className="flex flex-col md:pl-64 flex-1">{children}</div>
-        </div>
+        <SidebarProvider>
+            <div className="flex min-h-screen w-full bg-muted/20">
+                <DashboardSidebar schoolSlug={schoolSlug} />
+                <SidebarContentWrapper>{children}</SidebarContentWrapper>
+            </div>
+        </SidebarProvider>
     );
 }

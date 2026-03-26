@@ -19,25 +19,8 @@ import { toast } from "sonner";
 import Link from "next/link";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
-const moduleSchema = z.object({
-  title: z.string().min(1, "Module title is required"),
-  type: z.enum(["text", "video", "pdf"]),
-  content: z.string().min(1, "Content/URL is required"),
-  description: z.string().optional(),
-});
-
-const sectionSchema = z.object({
-  title: z.string().min(1, "Section title is required"),
-  modules: z.array(moduleSchema),
-});
-
-const courseSchema = z.object({
-  title: z.string().min(1, "Course title is required"),
-  description: z.string().optional(),
-  sections: z.array(sectionSchema),
-});
-
-type CourseFormValues = z.infer<typeof courseSchema>;
+import { courseSchema, CourseFormValues } from "@/lib/course-schema";
+import { SectionQuizEditor } from "@/components/course/course-quiz-editor";
 
 function SectionModules({
   sectionIndex,
@@ -322,6 +305,14 @@ export default function NewCoursePage({ params }: { params: Promise<{ schoolSlug
                       register={form.register}
                       errors={form.formState.errors}
                       watch={form.watch}
+                    />
+                    <SectionQuizEditor
+                      sectionIndex={index}
+                      control={form.control}
+                      register={form.register}
+                      errors={form.formState.errors}
+                      watch={form.watch}
+                      setValue={form.setValue}
                     />
                   </div>
                 </motion.div>

@@ -320,21 +320,21 @@ export default function Showcase() {
                 <nav className="container mx-auto flex justify-between items-center px-4">
                     <div className="logo-container flex items-center gap-2 group cursor-pointer">
                         <img src="https://firebasestorage.googleapis.com/v0/b/devtonic-lms-2.firebasestorage.app/o/Logo_no%20bg.png?alt=media&token=af4099c8-048a-4f73-88ab-7c160a23048b" alt="Devtonic Logo" className="h-10 group-hover:scale-110 transition-transform" />
-                        <span className="text-2xl font-black text-[#FF8A3D] tracking-tighter hidden sm:block" style={{ fontFamily: "'Outfit', sans-serif", filter: "drop-shadow(0 0 10px rgba(255, 138, 61, 0.3))" }}>Devtonic</span>
+                        <span className="text-2xl font-black text-[#853183] tracking-tighter hidden sm:block" style={{ fontFamily: "'Outfit', sans-serif", filter: "drop-shadow(0 0 10px rgba(133, 49, 131, 0.3))" }}>Devtonic</span>
                     </div>
 
                     <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="md:hidden text-white p-2 focus:outline-none">
                         <i className="fas fa-bars text-2xl"></i>
                     </button>
 
-                    <div className={`fixed inset-0 z-[100] bg-gray-900/95 backdrop-blur-md ${isMobileMenuOpen ? "flex" : "hidden"} md:bg-transparent md:backdrop-blur-none md:static md:flex items-center justify-center md:justify-end transition-all`}>
+                    <div className={`absolute top-0 left-0 w-full h-[100dvh] z-[100] bg-gray-900/95 backdrop-blur-md ${isMobileMenuOpen ? "flex" : "hidden"} md:bg-transparent md:backdrop-blur-none md:static md:flex md:w-auto md:h-auto items-center justify-center md:justify-end transition-all`}>
                         <button onClick={() => setIsMobileMenuOpen(false)} className="absolute top-6 right-6 md:hidden text-white p-2 focus:outline-none hover:text-gray-300">
                             <i className="fas fa-times text-3xl"></i>
                         </button>
                         <div className="flex flex-col md:flex-row items-center justify-center h-full space-y-8 md:space-y-0 md:space-x-6 w-full">
-                            <a href="#courses" className="nav-link text-xl md:text-base text-gray-100 md:text-inherit" onClick={() => setIsMobileMenuOpen(false)}>Courses</a>
-                            <a href="#why-us" className="nav-link text-xl md:text-base text-gray-100 md:text-inherit" onClick={() => setIsMobileMenuOpen(false)}>Why Us</a>
-                            <a href="#courses" className="nav-link text-xl md:text-base text-gray-100 md:text-inherit" onClick={() => setIsMobileMenuOpen(false)}>Pricing</a>
+                            <a href="#courses" className="nav-link text-[#FF8A3D] font-bold text-xl md:text-base" onClick={() => setIsMobileMenuOpen(false)}>Courses</a>
+                            <a href="#why-us" className="nav-link text-[#FF8A3D] font-bold text-xl md:text-base" onClick={() => setIsMobileMenuOpen(false)}>Why Us</a>
+                            <a href="#courses" className="nav-link text-[#FF8A3D] font-bold text-xl md:text-base" onClick={() => setIsMobileMenuOpen(false)}>Pricing</a>
                             <a href="#contact" className="nav-link text-[#FF8A3D] font-bold text-xl md:text-base" onClick={() => setIsMobileMenuOpen(false)}>Contact</a>
                             {/* <a href="#contact" className="nav-link text-xl md:text-base text-gray-100 md:text-inherit" onClick={() => setIsMobileMenuOpen(false)}>Contact</a> */}
 
@@ -349,301 +349,371 @@ export default function Showcase() {
                 </nav>
             </header>
 
-            <section className="relative h-screen overflow-hidden">
-                <canvas id="hero3D"></canvas>
+            <section className="relative min-h-[100dvh] md:min-h-[90vh] overflow-hidden flex items-center justify-center pt-24 pb-20">
                 <div className="absolute inset-0 w-full h-full z-0">
                     <video
-                        className="w-full h-full object-cover relative z-0"
+                        className="w-full h-full object-cover"
                         autoPlay
                         muted
                         loop
                         playsInline>
                         <source src="/Devtonic Intro 2.mp4" type="video/mp4" />
-                        {/* <source src="/TEACHING GRAPHICS TIPS.mp4" type="video/mp4" /> */}
                     </video>
-                    <div className="absolute inset-0 bg-black/60 z-10"></div>
+                    <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-gray-900 z-10"></div>
                 </div>
 
-                <div className="relative z-20 container mx-auto px-4 h-full flex flex-col justify-center items-center text-center">
-                    <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white to-purple-300 drop-shadow-lg">
-                        Transform Your Future with Tech
+                <div className="relative z-20 container mx-auto px-4 text-center mt-16">
+                    <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white via-purple-200 to-[#FF8A3D] drop-shadow-2xl tracking-tighter leading-tight break-words">
+                        Scale Your Business.<br />Master Your Future.
                     </h1>
-                    <p className="text-xl md:text-3xl mb-8 text-purple-200 h-10 font-mono drop-shadow">
-                        <span className="border-r-2 border-purple-200 pr-1 animate-pulse">{typingText}</span>
+                    <p className="text-lg md:text-2xl mb-10 md:mb-12 text-gray-200 max-w-3xl mx-auto font-medium drop-shadow-lg leading-relaxed px-2">
+                        Devtonic Systems Hub delivers enterprise-grade AI & software solutions while mentoring the next generation of global tech talent.
                     </p>
-                    <div className="flex flex-col sm:flex-row gap-4 justify-center w-full max-w-md mx-auto">
-                        <a href="#courses" className="cta-button px-8 py-4 rounded-full text-white font-bold relative z-10 w-full sm:w-auto shadow-lg hover:shadow-xl hover:scale-105 transition-all">
-                            Explore Courses
+                    <div className="flex flex-col sm:flex-row gap-4 md:gap-6 justify-center w-full max-w-2xl mx-auto px-2">
+                        <a href="#agency" className="group relative px-6 md:px-8 py-4 md:py-5 rounded-2xl bg-[#FF8A3D] text-white font-black text-lg overflow-hidden transition-all hover:scale-105 hover:shadow-[0_0_30px_rgba(255,138,61,0.4)] w-full sm:w-auto">
+                            <span className="relative z-10 flex items-center justify-center gap-2">
+                                Build My Solution <i className="fas fa-rocket transition-transform group-hover:translate-x-1 group-hover:-translate-y-1"></i>
+                            </span>
                         </a>
-                        <Link href="/portal" className="px-8 py-4 rounded-full text-white font-bold border-2 border-[#FF8A3D] bg-[#FF8A3D]/20 hover:bg-[#FF8A3D]/40 relative z-10 w-full sm:w-auto backdrop-blur-sm transition-all hover:scale-105">
-                            Enter LMS
-                        </Link>
+                        <a href="#academy" className="group relative px-6 md:px-8 py-4 md:py-5 rounded-2xl bg-white/10 backdrop-blur-md border-2 border-white/20 text-white font-black text-lg overflow-hidden transition-all hover:bg-white/20 hover:scale-105 w-full sm:w-auto">
+                            <span className="relative z-10 flex items-center justify-center gap-2">
+                                Start Learning <i className="fas fa-graduation-cap transition-transform group-hover:scale-110"></i>
+                            </span>
+                        </a>
                     </div>
+                </div>
+
+                <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 animate-bounce">
+                    <a href="#pillars" className="text-white/50 hover:text-white transition-colors">
+                        <i className="fas fa-chevron-down text-2xl"></i>
+                    </a>
                 </div>
             </section>
 
-            <main className="max-w-7xl mx-auto p-4 md:p-6" style={{ position: "relative", zIndex: 10 }}>
-                {/* Why Us / Academy & Agency Sections */}
-                <section id="why-us" className="my-16 md:my-24 scroll-mt-24">
-                    <h2 className="text-3xl md:text-5xl font-extrabold mb-12 text-center text-[#FF8A3D] drop-shadow-sm">Why Choose Devtonic?</h2>
-
-                    {/* Intro Video */}
-                    <div className="max-w-4xl mx-auto mb-16 fade-in rounded-2xl overflow-hidden shadow-2xl border-4 border-white/50">
-                        <div className="relative pb-[56.25%] h-0">
-                            <iframe
-                                src="https://www.youtube.com/embed/7Jagg5cy24U"
-                                title="Devtonic Intro Video"
-                                className="absolute top-0 left-0 w-full h-full"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowFullScreen>
-                            </iframe>
-                        </div>
-                    </div>
-
-                    <div className="grid md:grid-cols-2 gap-12 items-center mb-16 fade-in">
-                        <div className="bg-white p-8 rounded-2xl shadow-lg border-t-4 border-[#FF8A3D]">
-                            <h3 className="text-2xl font-bold mb-4 flex items-center gap-3">
-                                <i className="fas fa-graduation-cap text-[#FF8A3D]"></i>
-                                Devtonic Academy
-                            </h3>
-                            <p className="text-gray-700 leading-relaxed mb-4">
-                                We teach tech courses Mentoring individuals and teams to level up their skills and processes at different levels. Our offerings are suitable for beginners to advanced.
-                            </p>
+            <main className="relative z-30" id="pillars">
+                {/* Two Pillars Section */}
+                <section className="py-24 bg-gray-50 dark:bg-gray-900/50">
+                    <div className="container mx-auto px-4">
+                        <div className="text-center mb-16">
+                            <h2 className="text-sm font-black text-[#FF8A3D] uppercase tracking-[0.3em] mb-4">Our Expertise</h2>
+                            <h3 className="text-4xl md:text-5xl font-black text-gray-900 dark:text-white mb-6">Two Paths, One Mission: Excellence.</h3>
+                            <div className="h-1.5 w-24 bg-[#FF8A3D] mx-auto rounded-full"></div>
                         </div>
 
-                        <div className="bg-white p-8 rounded-2xl shadow-lg border-t-4 border-[#FF8A3D] fade-in">
-                            <h3 className="text-2xl font-bold mb-4 flex items-center gap-3">
-                                <i className="fas fa-rocket text-[#FF8A3D]"></i>
-                                Devtonic Agency
-                            </h3>
-                            <p className="text-gray-700 leading-relaxed">
-                                We craft high-quality web apps and Power Platform solutions that scale from startups to global enterprises—empowering your business to thrive.
-                            </p>
-                        </div>
-                    </div>
-
-                    {/* Completed Projects */}
-                    <div className="my-16 fade-in">
-                        <h3 className="text-3xl font-bold mb-8 text-center text-gray-800">Our Impact & Projects</h3>
-                        <div className="grid md:grid-cols-2 gap-8">
-                            {/* Project 1 */}
-                            <div className="group relative overflow-hidden rounded-xl shadow-lg bg-gray-50 border border-gray-100 transition-all hover:-translate-y-1">
-                                <img src="https://firebasestorage.googleapis.com/v0/b/studio-1523050100-2a1a4.firebasestorage.app/o/Elvis%20Portfolio%20Files%2FProjects%2FContact%20Manager%2FContact%20Manager_process%20flow.png?alt=media&token=14762b64-2500-4319-9b3a-42bf899aa5a1" alt="Project 1" className="w-full h-48 object-cover group-hover:scale-105 transition duration-500" />
-                                <div className="p-6">
-                                    <h4 className="font-bold text-xl mb-2">IFPMA Contact Distribution App</h4>
-                                    <p className="text-sm text-gray-600 mb-4">Developed a Power App managing 8,000+ AAD contacts.</p>
-                                    <div className="flex flex-wrap gap-2 text-xs">
-                                        <span className="px-2 py-1 bg-purple-100 text-[#FF8A3D] rounded-md">Power Apps</span>
-                                        <span className="px-2 py-1 bg-purple-100 text-[#FF8A3D] rounded-md">Azure AD</span>
+                        <div className="grid lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
+                            {/* Pillar 1: Agency */}
+                            <div id="agency" className="group relative p-8 md:p-12 rounded-[2.5rem] bg-white dark:bg-gray-800 shadow-xl border border-gray-100 dark:border-gray-700 transition-all hover:shadow-2xl overflow-hidden">
+                                <div className="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 rounded-full bg-[#FF8A3D] opacity-[0.03] group-hover:opacity-[0.08] transition-opacity"></div>
+                                <div className="relative z-10">
+                                    <div className="w-16 h-16 rounded-2xl bg-[#FF8A3D]/10 flex items-center justify-center text-[#FF8A3D] text-3xl mb-8 group-hover:scale-110 transition-transform">
+                                        <i className="fas fa-code"></i>
                                     </div>
+                                    <h4 className="text-3xl font-black mb-4 dark:text-white">Devtonic Agency</h4>
+                                    <p className="text-gray-600 dark:text-gray-400 text-lg leading-relaxed mb-8">
+                                        We craft high-quality web apps and AI-powered solutions that scale from startups to global enterprises—empowering your business to thrive in a digital-first world.
+                                    </p>
+                                    <ul className="space-y-4 mb-10">
+                                        <li className="flex items-start gap-3">
+                                            <i className="fas fa-check-circle text-green-500 mt-1"></i>
+                                            <span className="font-medium dark:text-gray-200">Custom Web & AI Solutions</span>
+                                        </li>
+                                        <li className="flex items-start gap-3">
+                                            <i className="fas fa-check-circle text-green-500 mt-1"></i>
+                                            <span className="font-medium dark:text-gray-200">Microsoft Power Platform Experts</span>
+                                        </li>
+                                        <li className="flex items-start gap-3">
+                                            <i className="fas fa-check-circle text-green-500 mt-1"></i>
+                                            <span className="font-medium dark:text-gray-200">Scalable Architecture (MVP → Enterprise)</span>
+                                        </li>
+                                    </ul>
+                                    <button className="group/btn px-8 py-4 rounded-xl bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-bold transition-all hover:gap-4 flex items-center gap-2 shadow-lg">
+                                        Explore Agency Services <i className="fas fa-arrow-right transition-transform group-hover/btn:translate-x-1"></i>
+                                    </button>
                                 </div>
                             </div>
 
-                            {/* Project 2 */}
-                            <div className="group relative overflow-hidden rounded-xl shadow-lg bg-gray-50 border border-gray-100 transition-all hover:-translate-y-1">
-                                <img src="https://firebasestorage.googleapis.com/v0/b/studio-1523050100-2a1a4.firebasestorage.app/o/Elvis%20Portfolio%20Files%2FProjects%2FVendor%20Management%20System%2FVMS-Home%20Page.jpeg?alt=media&token=78bf6715-0866-45df-b78d-a84874b98d4b" alt="Project 2" className="w-full h-48 object-cover group-hover:scale-105 transition duration-500" />
-                                <div className="p-6">
-                                    <h4 className="font-bold text-xl mb-2">ZoomTan Vendor Management</h4>
-                                    <p className="text-sm text-gray-600 mb-4">Automated vendor lifecycle and multi-level approval workflows.</p>
-                                    <div className="flex flex-wrap gap-2 text-xs">
-                                        <span className="px-2 py-1 bg-purple-100 text-[#FF8A3D] rounded-md">Power Automate</span>
-                                        <span className="px-2 py-1 bg-purple-100 text-[#FF8A3D] rounded-md">SharePoint</span>
+                            {/* Pillar 2: Academy */}
+                            <div id="academy" className="group relative p-8 md:p-12 rounded-[2.5rem] text-white shadow-xl shadow-purple-900/20 transition-all hover:shadow-2xl hover:shadow-purple-900/40 overflow-hidden" style={{ background: 'linear-gradient(to bottom right, #853183, #6a2669)' }}>
+                                <div className="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 rounded-full bg-white opacity-[0.05] group-hover:opacity-[0.1] transition-opacity"></div>
+                                <div className="relative z-10">
+                                    <div className="w-16 h-16 rounded-2xl bg-white/20 flex items-center justify-center text-white text-3xl mb-8 group-hover:scale-110 transition-transform">
+                                        <i className="fas fa-graduation-cap"></i>
                                     </div>
+                                    <h4 className="text-3xl font-black mb-4">Devtonic Academy</h4>
+                                    <p className="text-purple-100 text-lg leading-relaxed mb-8">
+                                        Level up your skills with structured, hands-on mentoring led by senior industry experts. Our programs are designed to take you from beginner to professional. Get into tech today!
+                                    </p>
+                                    <ul className="space-y-4 mb-10">
+                                        <li className="flex items-start gap-3">
+                                            <i className="fas fa-check-circle text-white/50 mt-1"></i>
+                                            <span className="font-medium">1-on-1 Personalized Mentoring</span>
+                                        </li>
+                                        <li className="flex items-start gap-3">
+                                            <i className="fas fa-check-circle text-white/50 mt-1"></i>
+                                            <span className="font-medium">Hands-on Portfolio Projects</span>
+                                        </li>
+                                        <li className="flex items-start gap-3">
+                                            <i className="fas fa-check-circle text-white/50 mt-1"></i>
+                                            <span className="font-medium">Corporate Upskilling & Bootcamps</span>
+                                        </li>
+                                    </ul>
+                                    <a href="#courses" className="group/btn px-8 py-4 rounded-xl bg-white text-[#853183] font-bold transition-all hover:gap-4 inline-flex items-center gap-2 shadow-lg">
+                                        View All Courses <i className="fas fa-arrow-right transition-transform group-hover/btn:translate-x-1"></i>
+                                    </a>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-                    {/* Monthly Live Webinars Highlight */}
-                    <div className="my-24 fade-in max-w-5xl mx-auto bg-gradient-to-br from-[#FF8A3D] to-purple-900 rounded-3xl p-8 md:p-12 text-white shadow-2xl relative overflow-hidden">
-                        <div className="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 rounded-full bg-white opacity-10 blur-3xl"></div>
-                        <div className="absolute bottom-0 left-0 -ml-16 -mb-16 w-64 h-64 rounded-full bg-[#FF8A3D] opacity-20 blur-3xl"></div>
-
-                        <div className="relative z-10 flex flex-col md:flex-row items-center gap-10">
-                            <div className="flex-1 text-center md:text-left">
-                                <div className="inline-block bg-white text-[#FF8A3D] px-4 py-1 rounded-full text-sm font-bold mb-4 shadow-md">
-                                    <i className="fas fa-video mr-2"></i> Monthly Live Webinars
-                                </div>
-                                <h3 className="text-3xl md:text-4xl font-bold mb-4">Connect With Industry Experts</h3>
-                                <p className="text-lg text-purple-100 mb-6 max-w-xl mx-auto md:mx-0">
-                                    Join our <strong className="text-white text-xl">Monthly Live Webinars</strong> where we dive into the latest tech trends, showcase real-world projects, and host interactive Q&A sessions to help you level up your career!
-                                </p>
-                                <ul className="flex flex-wrap gap-4 text-sm font-medium mb-8 justify-center md:justify-start">
-                                    <li className="bg-black/20 px-4 py-2 rounded-lg flex items-center"><i className="far fa-calendar-check text-green-400 mr-2"></i> Monthly Sessions</li>
-                                    <li className="bg-black/20 px-4 py-2 rounded-lg flex items-center"><i className="fas fa-comments text-blue-400 mr-2"></i> Interactive Q&A</li>
-                                </ul>
-                                <a href="https://zoom.us" target="_blank" rel="noopener noreferrer" className="inline-block bg-white text-[#FF8A3D] px-8 py-4 rounded-full font-bold hover:scale-105 transition-transform shadow-lg">
-                                    Register for Next Webinar
-                                </a>
-                            </div>
-                            <div className="w-full md:w-1/3 flex justify-center perspective-1000">
-                                <div className="bg-white/10 p-4 rounded-2xl backdrop-blur-md border border-white/20 shadow-2xl transform rotate-y-n12 hover:rotate-y-0 transition-all duration-500">
-                                    <img src="https://images.unsplash.com/photo-1591115765373-5207764f72e7?auto=format&fit=crop&w=500&q=80" alt="Live Webinar Presentation" className="rounded-xl w-64 md:w-full object-cover shadow-inner" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                 </section>
 
-                <section className="my-16 md:my-24 scroll-mt-24" id="courses">
-                    <h2 className="text-3xl font-semibold mb-4 gradient-heading">Course Offerings</h2>
-                    <p className="text-gray-600 mb-6">Master the latest tech skills with Devtonic Systems Hub Solution Ltd. Our courses cater to kids, teens, adults, business professionals, IT/non-IT personnel, and tech beginners. All software tools are provided at no extra cost!</p>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {Object.keys(courseDetails).map((title) => {
-                            const course = courseDetails[title];
-                            const courseImages: Record<string, string> = {
-                                "Agentic AI Mastery & Prompt Engineering": "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=800&q=80",
-                                "Cybersecurity Essentials & Ethical Hacking": "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=800&q=80",
-                                "Cloud Computing": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80",
-                                "Data Science & Machine Learning with Python": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80",
-                                "Full-Stack Web Development": "https://images.unsplash.com/photo-1593720213428-28a5b9e94613?auto=format&fit=crop&w=800&q=80",
-                                "Microsoft Office Suite": "https://images.unsplash.com/photo-1661956602116-aa6865609028?auto=format&fit=crop&w=800&q=80",
-                                "Professional Graphic Design & Video Editing": "https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&w=800&q=80",
-                                "VFX, 3D Modeling & Animation for Gaming & Media": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=800&q=80",
-                                "AI-Powered Digital Marketing & Automation": "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&w=800&q=80",
-                                "DevOps & Automation for Modern Developers": "https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?auto=format&fit=crop&w=800&q=80",
-                                "UI/UX Design: Create User-Centered Apps & Websites": "https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&w=800&q=80",
-                                "Powerplatform": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80",
-                            };
-                            const imgSrc = courseImages[title] ?? "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80";
-
-                            return (
-                                <div key={title} className="course-card bg-white p-6 rounded-lg shadow-md fade-in">
-                                    <div className="mb-4">
-                                        <img src={imgSrc} alt={title} className="rounded-lg w-full h-40 object-cover" />
+                {/* Features & How It Works */}
+                <section className="py-24 bg-white dark:bg-gray-800">
+                    <div className="container mx-auto px-4">
+                        <div className="grid lg:grid-cols-3 gap-12 items-center mb-24">
+                            <div className="lg:col-span-1">
+                                <h4 className="text-[#FF8A3D] font-black uppercase tracking-widest text-sm mb-4">How We Work</h4>
+                                <h5 className="text-4xl font-black dark:text-white mb-6">Built for Success, Designed for Growth.</h5>
+                                <p className="text-gray-600 dark:text-gray-400 text-lg leading-relaxed mb-8">
+                                    Whether we're building your next system or mentoring your future self, we follow a results-oriented methodology.
+                                </p>
+                                <div className="space-y-6">
+                                    <div className="flex gap-4 p-4 rounded-2xl bg-gray-50 dark:bg-gray-700/50 border border-gray-100 dark:border-gray-600">
+                                        <div className="text-2xl text-[#FF8A3D]"><i className="fas fa-lightbulb"></i></div>
+                                        <div>
+                                            <h6 className="font-bold dark:text-white">Understand & Strategic Plan</h6>
+                                            <p className="text-sm text-gray-500">We dive deep into your goals to create a roadmap that works.</p>
+                                        </div>
                                     </div>
-                                    <h3 className="text-xl font-semibold mb-2">{title}</h3>
-                                    <p className="text-gray-600 mb-4 text-sm leading-relaxed">{course.learn[0]}</p>
-                                    <div className="space-y-3">
-                                        <div className="flex justify-between items-center">
-                                            <span className="text-[#FF8A3D] font-bold text-sm">{course.pricing.split(" for ")[0]}</span>
-                                            <button
-                                                onClick={() => setSelectedCourse(course)}
-                                                className="bg-[#FF8A3D] text-white px-4 py-2 rounded-full hover:bg-[#E67A2E] transition relative z-10 text-sm">
-                                                See Details
-                                            </button>
+                                    <div className="flex gap-4 p-4 rounded-2xl bg-gray-50 dark:bg-gray-700/50 border border-gray-100 dark:border-gray-600">
+                                        <div className="text-2xl text-[#FF8A3D]"><i className="fas fa-tools"></i></div>
+                                        <div>
+                                            <h6 className="font-bold dark:text-white">Execute & Build</h6>
+                                            <p className="text-sm text-gray-500">Agile development and hands-on implementation with precision.</p>
+                                        </div>
+                                    </div>
+                                    <div className="flex gap-4 p-4 rounded-2xl bg-gray-50 dark:bg-gray-700/50 border border-gray-100 dark:border-gray-600">
+                                        <div className="text-2xl text-[#FF8A3D]"><i className="fas fa-chart-line"></i></div>
+                                        <div>
+                                            <h6 className="font-bold dark:text-white">Optimize & Scale</h6>
+                                            <p className="text-sm text-gray-500">Continuous support and leveling up to ensure long-term ROI.</p>
                                         </div>
                                     </div>
                                 </div>
-                            )
-                        })}
+                            </div>
+                            <div className="lg:col-span-2 grid md:grid-cols-2 gap-6">
+                                <div className="p-8 rounded-[2rem] bg-gray-50 dark:bg-gray-700/30 border border-gray-100 dark:border-gray-600 transition-all hover:-translate-y-2">
+                                    <i className="fas fa-cube text-3xl text-purple-600 mb-6"></i>
+                                    <h6 className="text-xl font-bold mb-3 dark:text-white">Scalable Architecture</h6>
+                                    <p className="text-gray-600 dark:text-gray-400">Systems that grow from MVP to global powerhouse without breaking a sweat.</p>
+                                </div>
+                                <div className="p-8 rounded-[2rem] bg-gray-50 dark:bg-gray-700/30 border border-gray-100 dark:border-gray-600 transition-all hover:-translate-y-2">
+                                    <i className="fas fa-microchip text-3xl text-[#FF8A3D] mb-6"></i>
+                                    <h6 className="text-xl font-bold mb-3 dark:text-white">AI-Powered Workflows</h6>
+                                    <p className="text-gray-600 dark:text-gray-400">Leveraging Agentic AI and LLMs to automate complex business processes.</p>
+                                </div>
+                                <div className="p-8 rounded-[2rem] bg-gray-50 dark:bg-gray-700/30 border border-gray-100 dark:border-gray-600 transition-all hover:-translate-y-2">
+                                    <i className="fas fa-users-gear text-3xl text-blue-600 mb-6"></i>
+                                    <h6 className="text-xl font-bold mb-3 dark:text-white">Hands-on Mentoring</h6>
+                                    <p className="text-gray-600 dark:text-gray-400">Direct access to seniors who've built enterprise systems for global brands.</p>
+                                </div>
+                                <div className="p-8 rounded-[2rem] bg-gray-50 dark:bg-gray-700/30 border border-gray-100 dark:border-gray-600 transition-all hover:-translate-y-2">
+                                    <i className="fas fa-briefcase text-3xl text-green-600 mb-6"></i>
+                                    <h6 className="text-xl font-bold mb-3 dark:text-white">Portfolio-Ready Outcomes</h6>
+                                    <p className="text-gray-600 dark:text-gray-400">Go beyond theory. Build projects that land jobs and win clients.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Impact Stats */}
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 py-16 border-y border-gray-100 dark:border-gray-700">
+                            <div className="text-center">
+                                <span className="block text-4xl md:text-5xl font-black text-gray-900 dark:text-white mb-2">50+</span>
+                                <span className="text-sm font-bold text-[#FF8A3D] uppercase tracking-widest">Projects Delivered</span>
+                            </div>
+                            <div className="text-center">
+                                <span className="block text-4xl md:text-5xl font-black text-gray-900 dark:text-white mb-2">200+</span>
+                                <span className="text-sm font-bold text-[#FF8A3D] uppercase tracking-widest">Students Trained</span>
+                            </div>
+                            <div className="text-center">
+                                <span className="block text-4xl md:text-5xl font-black text-gray-900 dark:text-white mb-2">15+</span>
+                                <span className="text-sm font-bold text-[#FF8A3D] uppercase tracking-widest">Expert Mentors</span>
+                            </div>
+                            <div className="text-center">
+                                <span className="block text-4xl md:text-5xl font-black text-gray-900 dark:text-white mb-2">10+</span>
+                                <span className="text-sm font-bold text-[#FF8A3D] uppercase tracking-widest">Global Partners</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section className="my-16 md:my-24 scroll-mt-24" id="courses">
+                    <div className="container mx-auto px-4">
+                        <div className="text-center mb-12">
+                            <h2 className="text-3xl font-semibold mb-4 gradient-heading inline-block">Course Offerings</h2>
+                            <p className="text-gray-600 max-w-2xl mx-auto">Master the latest tech skills with Devtonic Systems Hub Solution Ltd. Our courses cater to kids, teens, adults, business professionals, IT/non-IT personnel, and tech beginners. All software tools are provided at no extra cost!</p>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {Object.keys(courseDetails).map((title) => {
+                                const course = courseDetails[title];
+                                const courseImages: Record<string, string> = {
+                                    "Agentic AI Mastery & Prompt Engineering": "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=800&q=80",
+                                    "Cybersecurity Essentials & Ethical Hacking": "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=800&q=80",
+                                    "Cloud Computing": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80",
+                                    "Data Science & Machine Learning with Python": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80",
+                                    "Full-Stack Web Development": "https://images.unsplash.com/photo-1593720213428-28a5b9e94613?auto=format&fit=crop&w=800&q=80",
+                                    "Microsoft Office Suite": "https://images.unsplash.com/photo-1661956602116-aa6865609028?auto=format&fit=crop&w=800&q=80",
+                                    "Professional Graphic Design & Video Editing": "https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&w=800&q=80",
+                                    "VFX, 3D Modeling & Animation for Gaming & Media": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=800&q=80",
+                                    "AI-Powered Digital Marketing & Automation": "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&w=800&q=80",
+                                    "DevOps & Automation for Modern Developers": "https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?auto=format&fit=crop&w=800&q=80",
+                                    "UI/UX Design: Create User-Centered Apps & Websites": "https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&w=800&q=80",
+                                    "Powerplatform": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80",
+                                };
+                                const imgSrc = courseImages[title] ?? "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80";
+
+                                return (
+                                    <div key={title} className="course-card bg-white p-6 rounded-lg shadow-md fade-in">
+                                        <div className="mb-4">
+                                            <img src={imgSrc} alt={title} className="rounded-lg w-full h-40 object-cover" />
+                                        </div>
+                                        <h3 className="text-xl font-semibold mb-2">{title}</h3>
+                                        <p className="text-gray-600 mb-4 text-sm leading-relaxed">{course.learn[0]}</p>
+                                        <div className="space-y-3">
+                                            <div className="flex justify-between items-center">
+                                                <span className="text-[#FF8A3D] font-bold text-sm">{course.pricing.split(" for ")[0]}</span>
+                                                <button
+                                                    onClick={() => setSelectedCourse(course)}
+                                                    className="bg-[#FF8A3D] text-white px-4 py-2 rounded-full hover:bg-[#E67A2E] transition relative z-10 text-sm">
+                                                    See Details
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )
+                            })}
+                        </div>
                     </div>
                 </section>
 
                 {/* Learn with Devtonic (YouTube) */}
                 <section className="my-16 scroll-mt-24" id="tutorials">
-                    <h2 className="text-3xl font-bold mb-4 gradient-heading">Learn with Devtonic</h2>
-                    <p className="text-gray-600 mb-10 max-w-2xl">Explore our free YouTube tutorials to kickstart your journey in Power Apps, SharePoint, and more.</p>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {/* Tutorial 1 */}
-                        <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow flex flex-col h-full fade-in cursor-pointer group" onClick={() => window.open('https://www.youtube.com/watch?v=jRSmmbH2hJQ', '_blank')}>
-                            <div className="relative h-48 w-full overflow-hidden">
-                                <img src="https://i.ytimg.com/an_webp/jRSmmbH2hJQ/mqdefault_6s.webp?du=3000&sqp=CIy19cwG&rs=AOn4CLDJziNGWsNZQZA3fgc98RmaJ84ioA" alt="Vibe Coding Future" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-                                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
-                                    <i className="fab fa-youtube text-4xl text-white opacity-80 group-hover:opacity-100 group-hover:text-red-500 transition-all scale-90 group-hover:scale-110"></i>
-                                </div>
-                                <div className="absolute bottom-2 right-2 bg-black/80 text-white text-xs font-bold px-2 py-1 rounded">45:32</div>
-                            </div>
-                            <div className="p-4 flex flex-col flex-grow">
-                                <h4 className="font-bold text-gray-800 line-clamp-2 mb-2 group-hover:text-[#FF8A3D] transition-colors">Is "Vibe Coding" the Future of Power Apps? 🤯 Build Professional Apps in Minutes with AI.</h4>
-                                <p className="text-sm text-gray-600 line-clamp-2 flex-grow">I’ll be demonstrating how to go from a blank canvas to a fully animated, AI-generated Power App.</p>
-                            </div>
+                    <div className="container mx-auto px-4">
+                        <div className="text-center mb-12">
+                            <h2 className="text-3xl font-bold mb-4 gradient-heading inline-block">Learn with Devtonic</h2>
+                            <p className="text-gray-600 max-w-2xl mx-auto">Explore our free YouTube tutorials to kickstart your journey in Power Apps, SharePoint, and more.</p>
                         </div>
 
-                        {/* Tutorial 2 */}
-                        <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow flex flex-col h-full fade-in cursor-pointer group" onClick={() => window.open('https://www.youtube.com/watch?v=iqc4kKRBHwE', '_blank')}>
-                            <div className="relative h-48 w-full overflow-hidden">
-                                <img src="https://i.ytimg.com/vi/iqc4kKRBHwE/maxresdefault.jpg" alt="Sharepoint Setup" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-                                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
-                                    <i className="fab fa-youtube text-4xl text-white opacity-80 group-hover:opacity-100 group-hover:text-red-500 transition-all scale-90 group-hover:scale-110"></i>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {/* Tutorial 1 */}
+                            <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow flex flex-col h-full fade-in cursor-pointer group" onClick={() => window.open('https://www.youtube.com/watch?v=jRSmmbH2hJQ', '_blank')}>
+                                <div className="relative h-48 w-full overflow-hidden">
+                                    <img src="https://i.ytimg.com/an_webp/jRSmmbH2hJQ/mqdefault_6s.webp?du=3000&sqp=CIy19cwG&rs=AOn4CLDJziNGWsNZQZA3fgc98RmaJ84ioA" alt="Vibe Coding Future" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                                    <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
+                                        <i className="fab fa-youtube text-4xl text-white opacity-80 group-hover:opacity-100 group-hover:text-red-500 transition-all scale-90 group-hover:scale-110"></i>
+                                    </div>
+                                    <div className="absolute bottom-2 right-2 bg-black/80 text-white text-xs font-bold px-2 py-1 rounded">45:32</div>
                                 </div>
-                                <div className="absolute bottom-2 right-2 bg-black/80 text-white text-xs font-bold px-2 py-1 rounded">45:32</div>
+                                <div className="p-4 flex flex-col flex-grow">
+                                    <h4 className="font-bold text-gray-800 line-clamp-2 mb-2 group-hover:text-[#FF8A3D] transition-colors">Is "Vibe Coding" the Future of Power Apps? Build Professional Apps in Minutes with AI.</h4>
+                                    <p className="text-sm text-gray-600 line-clamp-2 flex-grow">I’ll be demonstrating how to go from a blank canvas to a fully animated, AI-generated Power App.</p>
+                                </div>
                             </div>
-                            <div className="p-4 flex flex-col flex-grow">
-                                <h4 className="font-bold text-gray-800 line-clamp-2 mb-2 group-hover:text-[#FF8A3D] transition-colors">Easy SharePoint Setup: Create Sites & Lists + PowerApps Made Simple</h4>
-                                <p className="text-sm text-gray-600 line-clamp-2 flex-grow">Supercharge Your Workflow with SharePoint + PowerApps! Hands-on tutorial.</p>
-                            </div>
-                        </div>
 
-                        {/* Tutorial 3 */}
-                        <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow flex flex-col h-full fade-in cursor-pointer group" onClick={() => window.open('https://www.youtube.com/watch?v=meEFY3-hff8&t=40s', '_blank')}>
-                            <div className="relative h-48 w-full overflow-hidden">
-                                <img src="https://i.ytimg.com/vi/meEFY3-hff8/maxresdefault.jpg" alt="PowerApps Sorting" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-                                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
-                                    <i className="fab fa-youtube text-4xl text-white opacity-80 group-hover:opacity-100 group-hover:text-red-500 transition-all scale-90 group-hover:scale-110"></i>
+                            {/* Tutorial 2 */}
+                            <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow flex flex-col h-full fade-in cursor-pointer group" onClick={() => window.open('https://www.youtube.com/watch?v=iqc4kKRBHwE', '_blank')}>
+                                <div className="relative h-48 w-full overflow-hidden">
+                                    <img src="https://i.ytimg.com/vi/iqc4kKRBHwE/maxresdefault.jpg" alt="Sharepoint Setup" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                                    <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
+                                        <i className="fab fa-youtube text-4xl text-white opacity-80 group-hover:opacity-100 group-hover:text-red-500 transition-all scale-90 group-hover:scale-110"></i>
+                                    </div>
+                                    <div className="absolute bottom-2 right-2 bg-black/80 text-white text-xs font-bold px-2 py-1 rounded">45:32</div>
                                 </div>
-                                <div className="absolute bottom-2 right-2 bg-black/80 text-white text-xs font-bold px-2 py-1 rounded">52:48</div>
+                                <div className="p-4 flex flex-col flex-grow">
+                                    <h4 className="font-bold text-gray-800 line-clamp-2 mb-2 group-hover:text-[#FF8A3D] transition-colors">Easy SharePoint Setup: Create Sites & Lists + PowerApps Made Simple</h4>
+                                    <p className="text-sm text-gray-600 line-clamp-2 flex-grow">Supercharge Your Workflow with SharePoint + PowerApps! Hands-on tutorial.</p>
+                                </div>
                             </div>
-                            <div className="p-4 flex flex-col flex-grow">
-                                <h4 className="font-bold text-gray-800 line-clamp-2 mb-2 group-hover:text-[#FF8A3D] transition-colors">PowerApps Sorting Hack: Build Custom Reordering Logic in Minutes!</h4>
-                                <p className="text-sm text-gray-600 line-clamp-2 flex-grow">Struggling with Realtime sorting and item reordering in PowerApps?</p>
+
+                            {/* Tutorial 3 */}
+                            <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow flex flex-col h-full fade-in cursor-pointer group" onClick={() => window.open('https://www.youtube.com/watch?v=meEFY3-hff8&t=40s', '_blank')}>
+                                <div className="relative h-48 w-full overflow-hidden">
+                                    <img src="https://i.ytimg.com/vi/meEFY3-hff8/maxresdefault.jpg" alt="PowerApps Sorting" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                                    <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
+                                        <i className="fab fa-youtube text-4xl text-white opacity-80 group-hover:opacity-100 group-hover:text-red-500 transition-all scale-90 group-hover:scale-110"></i>
+                                    </div>
+                                    <div className="absolute bottom-2 right-2 bg-black/80 text-white text-xs font-bold px-2 py-1 rounded">52:48</div>
+                                </div>
+                                <div className="p-4 flex flex-col flex-grow">
+                                    <h4 className="font-bold text-gray-800 line-clamp-2 mb-2 group-hover:text-[#FF8A3D] transition-colors">PowerApps Sorting Hack: Build Custom Reordering Logic in Minutes!</h4>
+                                    <p className="text-sm text-gray-600 line-clamp-2 flex-grow">Struggling with Realtime sorting and item reordering in PowerApps?</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div className="text-center mt-10">
-                        <a href="https://www.youtube.com/@Devtonic" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-white bg-red-600 px-8 py-4 rounded-full font-bold hover:bg-red-700 hover:scale-105 transition-all shadow-lg hover:shadow-red-500/50">
-                            View all tutorials on YouTube <i className="fas fa-play"></i>
-                        </a>
+                        <div className="text-center mt-10">
+                            <a href="https://www.youtube.com/@Devtonic" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-white bg-red-600 px-8 py-4 rounded-full font-bold hover:bg-red-700 hover:scale-105 transition-all shadow-lg hover:shadow-red-500/50">
+                                View all tutorials on YouTube <i className="fas fa-play"></i>
+                            </a>
+                        </div>
                     </div>
                 </section>
 
                 {/* Testimonials Section */}
                 <section className="my-16 md:my-24 scroll-mt-24" id="testimonials">
-                    <div className="text-center mb-12">
-                        <h2 className="text-3xl md:text-4xl font-bold mb-4 gradient-heading inline-block">Success Stories</h2>
-                        <p className="text-gray-600 max-w-2xl mx-auto">Hear from the teams and individuals who have leveled up their technical capabilities with Devtonic.</p>
-                    </div>
+                    <div className="container mx-auto px-4">
+                        <div className="text-center mb-12">
+                            <h2 className="text-3xl md:text-4xl font-bold mb-4 gradient-heading inline-block">Success Stories</h2>
+                            <p className="text-gray-600 max-w-2xl mx-auto">Hear from the teams and individuals who have leveled up their technical capabilities with Devtonic.</p>
+                        </div>
 
-                    <div className="grid md:grid-cols-3 gap-8">
-                        <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 relative fade-in">
-                            <i className="fas fa-quote-left text-4xl text-[#FF8A3D]/20 absolute top-6 left-6"></i>
-                            <div className="relative z-10">
-                                <div className="flex text-yellow-400 mb-4">
-                                    <i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i>
-                                </div>
-                                <p className="text-gray-700 italic mb-6">"The Devtonic team totally revolutionized how we handle Vendor Management. The automated workflows they built on the Power Platform saved us countless hours of manual data entry."</p>
-                                <div className="flex items-center gap-4">
-                                    <div className="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center text-gray-500 font-bold">ZT</div>
-                                    <div>
-                                        <h4 className="font-bold text-gray-800">Operations Lead</h4>
-                                        <span className="text-sm text-gray-500">ZoomTan Inc.</span>
+                        <div className="grid md:grid-cols-3 gap-8">
+                            <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 relative fade-in">
+                                <i className="fas fa-quote-left text-4xl text-[#FF8A3D]/20 absolute top-6 left-6"></i>
+                                <div className="relative z-10">
+                                    <div className="flex text-yellow-400 mb-4">
+                                        <i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i>
+                                    </div>
+                                    <p className="text-gray-700 italic mb-6">"The Devtonic team totally revolutionized how we handle Vendor Management. The automated workflows they built on the Power Platform saved us countless hours of manual data entry."</p>
+                                    <div className="flex items-center gap-4">
+                                        <div className="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center text-gray-500 font-bold">ZT</div>
+                                        <div>
+                                            <h4 className="font-bold text-gray-800">Operations Lead</h4>
+                                            <span className="text-sm text-gray-500">ZoomTan Inc.</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 relative fade-in">
-                            <i className="fas fa-quote-left text-4xl text-[#FF8A3D]/20 absolute top-6 left-6"></i>
-                            <div className="relative z-10">
-                                <div className="flex text-yellow-400 mb-4">
-                                    <i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i>
-                                </div>
-                                <p className="text-gray-700 italic mb-6">"I joined the Skool community as a beginner and within months I was building my own canvas apps. The mentorship and YouTube tutorials are simply world-class!"</p>
-                                <div className="flex items-center gap-4">
-                                    <div className="w-12 h-12 bg-purple-100 text-[#FF8A3D] rounded-full flex items-center justify-center font-bold">M</div>
-                                    <div>
-                                        <h4 className="font-bold text-gray-800">Marcus T.</h4>
-                                        <span className="text-sm text-gray-500">Academy Student</span>
+                            <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 relative fade-in">
+                                <i className="fas fa-quote-left text-4xl text-[#FF8A3D]/20 absolute top-6 left-6"></i>
+                                <div className="relative z-10">
+                                    <div className="flex text-yellow-400 mb-4">
+                                        <i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i>
+                                    </div>
+                                    <p className="text-gray-700 italic mb-6">"I joined the Skool community as a beginner and within months I was building my own canvas apps. The mentorship and YouTube tutorials are simply world-class!"</p>
+                                    <div className="flex items-center gap-4">
+                                        <div className="w-12 h-12 bg-purple-100 text-[#FF8A3D] rounded-full flex items-center justify-center font-bold">M</div>
+                                        <div>
+                                            <h4 className="font-bold text-gray-800">Marcus T.</h4>
+                                            <span className="text-sm text-gray-500">Academy Student</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 relative fade-in">
-                            <i className="fas fa-quote-left text-4xl text-[#FF8A3D]/20 absolute top-6 left-6"></i>
-                            <div className="relative z-10">
-                                <div className="flex text-yellow-400 mb-4">
-                                    <i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i>
-                                </div>
-                                <p className="text-gray-700 italic mb-6">"Devtonic developed a flawless Contact App syncing over 8,000 active Azure profiles. The speed, security, and scale of their solutions are unmatched."</p>
-                                <div className="flex items-center gap-4">
-                                    <div className="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center text-gray-500 font-bold">IF</div>
-                                    <div>
-                                        <h4 className="font-bold text-gray-800">IT Director</h4>
-                                        <span className="text-sm text-gray-500">IFPMA</span>
+                            <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 relative fade-in">
+                                <i className="fas fa-quote-left text-4xl text-[#FF8A3D]/20 absolute top-6 left-6"></i>
+                                <div className="relative z-10">
+                                    <div className="flex text-yellow-400 mb-4">
+                                        <i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i>
+                                    </div>
+                                    <p className="text-gray-700 italic mb-6">"Devtonic developed a flawless Contact App syncing over 8,000 active Azure profiles. The speed, security, and scale of their solutions are unmatched."</p>
+                                    <div className="flex items-center gap-4">
+                                        <div className="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center text-gray-500 font-bold">IF</div>
+                                        <div>
+                                            <h4 className="font-bold text-gray-800">IT Director</h4>
+                                            <span className="text-sm text-gray-500">IFPMA</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -651,40 +721,55 @@ export default function Showcase() {
                     </div>
                 </section>
 
-                {/* Contact Us Section */}
-                <section id="contact" className="my-16 scroll-mt-24 p-8 bg-[rgb(143,49,138)]/5 rounded-3xl fade-in border border-[rgb(143,49,138)]/20 shadow-sm relative overflow-hidden">
-                    <div className="absolute inset-0 opacity-10 pointer-events-none" style={{ backgroundImage: "radial-gradient(circle at center, rgb(143,49,138) 2px, transparent 2px)", backgroundSize: "20px 20px" }}></div>
-                    <div className="max-w-3xl mx-auto relative z-10 text-center">
-                        <h2 className="text-3xl font-bold mb-4 text-gray-800">Get in Touch</h2>
-                        <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
-                            Ready to transform your skills or build your next scalable app? Send us a message to get started with Devtonic Academy or Devtonic Agency.
-                        </p>
-
-                        <form onSubmit={handleContactSubmit} className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 text-left">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-2" htmlFor="name">Full Name</label>
-                                    <input type="text" id="name" name="name" required className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[rgb(143,49,138)] focus:border-transparent outline-none transition-all" placeholder="John Doe" />
+                {/* Final CTA & Contact Section */}
+                <section id="contact" className="py-24 bg-[#853183] relative overflow-hidden">
+                    <div className="absolute inset-0 opacity-10 pointer-events-none" style={{ backgroundImage: "radial-gradient(circle at center, white 2px, transparent 2px)", backgroundSize: "32px 32px" }}></div>
+                    <div className="container mx-auto px-4 relative z-10">
+                        <div className="max-w-6xl mx-auto bg-white rounded-[3rem] shadow-2xl overflow-hidden flex flex-col lg:flex-row">
+                            <div className="lg:w-1/2 p-8 md:p-16 bg-gray-50 dark:bg-gray-800/50">
+                                <h2 className="text-[#FF8A3D] font-black uppercase tracking-widest text-sm mb-4">Get Started</h2>
+                                <h3 className="text-4xl md:text-5xl font-black text-gray-900 dark:text-white mb-6 leading-tight">Ready to Transform Your Tech Journey?</h3>
+                                <p className="text-gray-600 dark:text-gray-400 text-lg mb-10 leading-relaxed">
+                                    Whether you're looking to build a world-class system or become a world-class developer, Devtonic is your partner in growth.
+                                </p>
+                                <div className="space-y-6">
+                                    <div className="flex items-center gap-4">
+                                        <div className="w-12 h-12 rounded-full bg-[#FF8A3D]/10 flex items-center justify-center text-[#FF8A3D]"><i className="fas fa-envelope"></i></div>
+                                        <span className="font-bold dark:text-white">devtonicllc@gmail.com</span>
+                                    </div>
+                                    <div className="flex items-center gap-4">
+                                        <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600"><i className="fas fa-phone"></i></div>
+                                        <span className="font-bold dark:text-white">+234 806 262 6722</span>
+                                    </div>
+                                    <div className="flex items-center gap-4">
+                                        <div className="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center text-red-600"><i className="fas fa-location-dot"></i></div>
+                                        <span className="font-bold dark:text-white">Lagos, Nigeria</span>
+                                    </div>
                                 </div>
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-2" htmlFor="email">Email Address</label>
-                                    <input type="email" id="email" name="email" required className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[rgb(143,49,138)] focus:border-transparent outline-none transition-all" placeholder="john@example.com" />
-                                </div>
                             </div>
-                            <div className="mb-6">
-                                <label className="block text-sm font-medium text-gray-700 mb-2" htmlFor="message">Your Message</label>
-                                <textarea id="message" name="message" rows={4} required className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[rgb(143,49,138)] focus:border-transparent outline-none transition-all" placeholder="How can we help you?"></textarea>
+                            <div className="lg:w-1/2 p-8 md:p-16">
+                                <form onSubmit={handleContactSubmit} className="space-y-6">
+                                    <div className="grid md:grid-cols-2 gap-6">
+                                        <div className="space-y-2">
+                                            <label className="text-sm font-black uppercase tracking-widest text-gray-400">Full Name</label>
+                                            <input type="text" name="name" required className="w-full px-6 py-4 rounded-2xl bg-gray-50 border-transparent focus:bg-white focus:ring-2 focus:ring-[#FF8A3D] transition-all outline-none" placeholder="John Doe" />
+                                        </div>
+                                        <div className="space-y-2">
+                                            <label className="text-sm font-black uppercase tracking-widest text-gray-400">Email Address</label>
+                                            <input type="email" name="email" required className="w-full px-6 py-4 rounded-2xl bg-gray-50 border-transparent focus:bg-white focus:ring-2 focus:ring-[#FF8A3D] transition-all outline-none" placeholder="john@example.com" />
+                                        </div>
+                                    </div>
+                                    <div className="space-y-2">
+                                        <label className="text-sm font-black uppercase tracking-widest text-gray-400">Your Message</label>
+                                        <textarea name="message" rows={4} required className="w-full px-6 py-4 rounded-2xl bg-gray-50 border-transparent focus:bg-white focus:ring-2 focus:ring-[#FF8A3D] transition-all outline-none resize-none" placeholder="How can we help you?"></textarea>
+                                    </div>
+                                    <button type="submit" disabled={isSubmitting} className="w-full py-5 rounded-2xl bg-gray-900 text-white font-black text-lg transition-all hover:bg-[#FF8A3D] hover:shadow-[0_10px_30px_rgba(255,138,61,0.3)] disabled:opacity-50">
+                                        {isSubmitting ? <i className="fas fa-spinner fa-spin mr-2"></i> : <i className="fas fa-paper-plane mr-2"></i>}
+                                        Send Message
+                                    </button>
+                                </form>
                             </div>
-                            <div className="text-center">
-                                <button type="submit" disabled={isSubmitting} className="inline-flex items-center justify-center gap-2 bg-[rgb(143,49,138)] text-white px-8 py-4 rounded-full font-bold hover:bg-[#E67A2E] disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg hover:shadow-xl w-full sm:w-auto">
-                                    {isSubmitting ? (
-                                        <><i className="fas fa-spinner fa-spin"></i> Sending...</>
-                                    ) : (
-                                        <><i className="fas fa-paper-plane"></i> Send Message</>
-                                    )}
-                                </button>
-                            </div>
-                        </form>
+                        </div>
                     </div>
                 </section>
             </main>

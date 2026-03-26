@@ -2,7 +2,7 @@ import { DashboardSidebar } from "@/components/dashboard-sidebar";
 import { SidebarProvider } from "@/components/sidebar-context";
 import { SidebarContentWrapper } from "@/components/sidebar-content-wrapper";
 
-export default async function DashboardLayout({
+export default async function CoursesLayout({
     children,
     params,
 }: {

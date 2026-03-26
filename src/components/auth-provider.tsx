@@ -62,6 +62,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             if (role !== "super-admin" || firestoreRole === "super-admin") {
               role = firestoreRole;
             }
+          } else {
+            // User document was removed or not found.
+            const creationTime = new Date(firebaseUser.metadata.creationTime || "").getTime();
+            const isJustCreated = (Date.now() - creationTime) < 15000; // 15 seconds grace period
+            
+            if (firebaseUser.email?.toLowerCase() !== SUPER_ADMIN_EMAIL && !isJustCreated) {
+              await signOut(auth);
+              setUser(null);
+              setLoading(false);
+              return;
+            }
           }
         }
 

@@ -10,6 +10,7 @@ import { Search, BookOpen, Clock } from "lucide-react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useAuth } from "@/components/auth-provider";
+import { DashboardTopbar } from "@/components/dashboard-topbar";
 
 export default function CoursesCatalogPage({ params }: { params: Promise<{ schoolSlug: string }> }) {
   const { schoolSlug } = use(params);
@@ -41,7 +42,9 @@ export default function CoursesCatalogPage({ params }: { params: Promise<{ schoo
   );
 
   return (
-    <div className="container mx-auto py-12 px-4 max-w-6xl">
+    <div className="flex flex-col flex-1 w-full">
+      <DashboardTopbar breadcrumb="Course Catalog" />
+      <div className="p-8 max-w-7xl mx-auto w-full">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-4">
         <div>
           <h1 className="text-3xl font-bold tracking-tight mb-2">Course Catalog</h1>
@@ -96,6 +99,7 @@ export default function CoursesCatalogPage({ params }: { params: Promise<{ schoo
           <p className="text-muted-foreground mt-1">Try adjusting your search criteria.</p>
         </div>
       )}
+      </div>
     </div>
   );
 }
