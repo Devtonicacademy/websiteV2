@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import {
   BarChart,
@@ -24,6 +24,7 @@ import { db } from "@/lib/firebase";
 
 export function DashboardSidebar({ schoolSlug }: { schoolSlug: string }) {
   const pathname = usePathname();
+  const router = useRouter();
   const { user, logout, isSuperAdmin, isAdmin, isInstructor } = useAuth();
   const { isOpen, isCollapsed, toggleCollapsed, close } = useSidebar();
   const [pendingEnrollments, setPendingEnrollments] = useState(0);
@@ -199,7 +200,10 @@ export function DashboardSidebar({ schoolSlug }: { schoolSlug: string }) {
               "w-full text-muted-foreground hover:text-foreground hover:bg-muted rounded-xl",
               isCollapsed ? "justify-center px-2" : "justify-start"
             )}
-            onClick={() => logout()}
+            onClick={async () => {
+              await logout();
+              router.push(`/${schoolSlug}/auth/login`);
+            }}
           >
             <LogOut className={cn("h-4 w-4", !isCollapsed && "mr-3")} />
             {!isCollapsed && "Sign Out"}
