@@ -308,8 +308,7 @@
             color: #fff;
         }
 
-        .dark-mode .course-card,
-        .dark-mode .bg-white {
+        .dark-mode .course-card {
             background-color: #2d2d2d;
             border-color: rgba(255, 255, 255, 0.1);
         }
@@ -430,13 +429,8 @@
         }
 
         .dark-mode .course-card {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(40, 40, 60, 0.8);
             backdrop-filter: blur(10px);
-        }
-
-        .dark-mode .bg-white {
-            background: rgba(255, 255, 255, 0.05);
-            color: white;
         }
 
         /* Logo styles */

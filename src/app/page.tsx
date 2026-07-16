@@ -2,6 +2,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useTheme } from "next-themes";
 import Script from "next/script";
 import Link from "next/link";
 import { db } from "@/lib/firebase";
@@ -18,8 +19,99 @@ interface Course {
     schedule: string;
 }
 
+interface Project {
+    title: string;
+    student?: string;
+    url: string;
+    description: string;
+    date?: string;
+    image: string;
+}
+
+const studentProjects: Project[] = [
+    {
+        title: "LuxeRent",
+        student: "David",
+        url: "https://luxerent-v2.vercel.app/",
+        description: "Premium Long-Term Rentals Across Lagos State's Finest Zip Codes.",
+        date: "Feb 2026",
+        image: "/screenshots/luxerent.png"
+    },
+    {
+        title: "Femine Shop",
+        student: "Femi",
+        url: "https://femine-shop.vercel.app/",
+        description: "A modern e-commerce storefront for premium apparel and accessories.",
+        date: "Jan 2026",
+        image: "/screenshots/femine-shop.png"
+    },
+    {
+        title: "QuickSave",
+        student: "Femi",
+        url: "https://quicksave-web.onrender.com/",
+        description: "An efficient, lightning-fast downloader for Twitter and Instagram media content.",
+        date: "Mar 2026",
+        image: "/screenshots/quicksave.png"
+    },
+    {
+        title: "Shelfie",
+        student: "Joy",
+        url: "https://shelfie-eta.vercel.app/",
+        description: "An interactive digital bookshelf and catalog for book enthusiasts.",
+        date: "May 2026",
+        image: "/screenshots/shelfie.png"
+    },
+    {
+        title: "Otaku Haven",
+        student: "Favor",
+        url: "https://otaku-haven-seven.vercel.app/",
+        description: "A next-generation anime discovery portal and library for otakus.",
+        date: "Apr 2026",
+        image: "/screenshots/otaku-haven.png"
+    },
+    {
+        title: "Clarity Todo",
+        student: "Academy Student",
+        url: "https://aesthetic-todo-steel.vercel.app/",
+        description: "A beautiful, minimalist todo application focused on clarity and productivity.",
+        date: "Jun 2026",
+        image: "/screenshots/aesthetic-todo.png"
+    },
+    {
+        title: "Wishroom",
+        student: "Academy Student",
+        url: "https://wishroom-nine.vercel.app/",
+        description: "An elegant digital wishlist builder and sharing platform.",
+        date: "Jul 2026",
+        image: "/screenshots/wishroom.png"
+    }
+];
+
+const teamProducts: Project[] = [
+    {
+        title: "WritePDF",
+        url: "https://writepdf.app/",
+        description: "100% Free Secure Online PDF Editor & Form Filler. Files are processed entirely client-side for maximum security and privacy.",
+        image: "/screenshots/writepdf.png"
+    },
+    {
+        title: "Duellio",
+        url: "https://duellio-game.web.app/",
+        description: "A premium Web3 competitive card gaming realm built on decentralized assets.",
+        image: "/screenshots/duellio.png"
+    },
+    {
+        title: "Lakeduck Integrated",
+        url: "https://lakedukeintegrated.com/",
+        description: "Global supply chain and business solutions connecting African excellence to worldwide markets.",
+        image: "/screenshots/lakeduke.png"
+    }
+];
+
 export default function Showcase() {
-    const [isDarkMode, setIsDarkMode] = useState(false);
+    const { theme, setTheme, resolvedTheme } = useTheme();
+    const isDarkMode = resolvedTheme === "dark";
+    const [mounted, setMounted] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
     const [showCheckout, setShowCheckout] = useState(false);
@@ -249,7 +341,9 @@ export default function Showcase() {
         }
     };
 
+    // Sync legacy dark-mode class on body for showcase.css custom styles
     useEffect(() => {
+        setMounted(true);
         if (isDarkMode) {
             document.body.classList.add("dark-mode");
         } else {
@@ -308,7 +402,6 @@ export default function Showcase() {
 
     return (
         <>
-            <Script src="https://cdn.tailwindcss.com" strategy="beforeInteractive" />
             <Script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" strategy="beforeInteractive" />
             <Script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.7.1/gsap.min.js" strategy="lazyOnload" />
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
@@ -323,7 +416,7 @@ export default function Showcase() {
                         <span className="text-2xl font-black text-[#853183] tracking-tighter hidden sm:block" style={{ fontFamily: "'Outfit', sans-serif", filter: "drop-shadow(0 0 10px rgba(133, 49, 131, 0.3))" }}>Devtonic</span>
                     </div>
 
-                    <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="md:hidden text-white p-2 focus:outline-none">
+                    <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className={`md:hidden p-2 focus:outline-none transition-colors ${scrolled ? 'text-gray-900 dark:text-white' : 'text-white'}`}>
                         <i className="fas fa-bars text-2xl"></i>
                     </button>
 
@@ -333,6 +426,8 @@ export default function Showcase() {
                         </button>
                         <div className="flex flex-col md:flex-row items-center justify-center h-full space-y-8 md:space-y-0 md:space-x-6 w-full">
                             <a href="#courses" className="nav-link text-[#FF8A3D] font-bold text-xl md:text-base" onClick={() => setIsMobileMenuOpen(false)}>Courses</a>
+                            <a href="#student-projects" className="nav-link text-[#FF8A3D] font-bold text-xl md:text-base" onClick={() => setIsMobileMenuOpen(false)}>Showcase</a>
+                            <a href="#team-products" className="nav-link text-[#FF8A3D] font-bold text-xl md:text-base" onClick={() => setIsMobileMenuOpen(false)}>Products</a>
                             <a href="#why-us" className="nav-link text-[#FF8A3D] font-bold text-xl md:text-base" onClick={() => setIsMobileMenuOpen(false)}>Why Us</a>
                             <a href="#courses" className="nav-link text-[#FF8A3D] font-bold text-xl md:text-base" onClick={() => setIsMobileMenuOpen(false)}>Pricing</a>
                             <a href="#contact" className="nav-link text-[#FF8A3D] font-bold text-xl md:text-base" onClick={() => setIsMobileMenuOpen(false)}>Contact</a>
@@ -341,8 +436,8 @@ export default function Showcase() {
                             {/* ADD LMS LINK HERE */}
                             <Link href="/portal" className="nav-link text-[#FF8A3D] font-bold text-xl md:text-base" onClick={() => setIsMobileMenuOpen(false)}>LMS Portal</Link>
 
-                            <button onClick={() => setIsDarkMode(!isDarkMode)} className="relative inline-flex items-center justify-center p-2 rounded-full transition-colors duration-300 focus:outline-none hover:bg-white/10">
-                                {isDarkMode ? <i className="fas fa-moon text-purple-200 text-xl md:text-lg"></i> : <i className="fas fa-sun text-yellow-400 text-xl md:text-lg"></i>}
+                            <button onClick={() => setTheme(isDarkMode ? 'light' : 'dark')} className="relative inline-flex items-center justify-center p-2 rounded-full transition-colors duration-300 focus:outline-none hover:bg-white/10">
+                                {mounted && isDarkMode ? <i className="fas fa-moon text-purple-200 text-xl md:text-lg"></i> : <i className="fas fa-sun text-yellow-400 text-xl md:text-lg"></i>}
                             </button>
                         </div>
                     </div>
@@ -408,22 +503,22 @@ export default function Showcase() {
                                     <div className="w-16 h-16 rounded-2xl bg-[#FF8A3D]/10 flex items-center justify-center text-[#FF8A3D] text-3xl mb-8 group-hover:scale-110 transition-transform">
                                         <i className="fas fa-code"></i>
                                     </div>
-                                    <h4 className="text-3xl font-black mb-4 dark:text-white">Devtonic Agency</h4>
-                                    <p className="text-gray-600 dark:text-gray-400 text-lg leading-relaxed mb-8">
+                                    <h4 className="text-3xl font-black mb-4 text-gray-900 dark:text-white">Devtonic Agency</h4>
+                                    <p className="text-gray-600 dark:text-gray-300 text-lg leading-relaxed mb-8">
                                         We craft high-quality web apps and AI-powered solutions that scale from startups to global enterprises—empowering your business to thrive in a digital-first world.
                                     </p>
                                     <ul className="space-y-4 mb-10">
                                         <li className="flex items-start gap-3">
                                             <i className="fas fa-check-circle text-green-500 mt-1"></i>
-                                            <span className="font-medium dark:text-gray-200">Custom Web & AI Solutions</span>
+                                            <span className="font-medium text-gray-800 dark:text-gray-200">Custom Web & AI Solutions</span>
                                         </li>
                                         <li className="flex items-start gap-3">
                                             <i className="fas fa-check-circle text-green-500 mt-1"></i>
-                                            <span className="font-medium dark:text-gray-200">Microsoft Power Platform Experts</span>
+                                            <span className="font-medium text-gray-800 dark:text-gray-200">Microsoft Power Platform Experts</span>
                                         </li>
                                         <li className="flex items-start gap-3">
                                             <i className="fas fa-check-circle text-green-500 mt-1"></i>
-                                            <span className="font-medium dark:text-gray-200">Scalable Architecture (MVP → Enterprise)</span>
+                                            <span className="font-medium text-gray-800 dark:text-gray-200">Scalable Architecture (MVP → Enterprise)</span>
                                         </li>
                                     </ul>
                                     <button className="group/btn px-8 py-4 rounded-xl bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-bold transition-all hover:gap-4 flex items-center gap-2 shadow-lg">
@@ -480,22 +575,22 @@ export default function Showcase() {
                                     <div className="flex gap-4 p-4 rounded-2xl bg-gray-50 dark:bg-gray-700/50 border border-gray-100 dark:border-gray-600">
                                         <div className="text-2xl text-[#FF8A3D]"><i className="fas fa-lightbulb"></i></div>
                                         <div>
-                                            <h6 className="font-bold dark:text-white">Understand & Strategic Plan</h6>
-                                            <p className="text-sm text-gray-500">We dive deep into your goals to create a roadmap that works.</p>
+                                            <h6 className="font-bold text-gray-900 dark:text-white">Understand & Strategic Plan</h6>
+                                            <p className="text-sm text-gray-500 dark:text-gray-400">We dive deep into your goals to create a roadmap that works.</p>
                                         </div>
                                     </div>
                                     <div className="flex gap-4 p-4 rounded-2xl bg-gray-50 dark:bg-gray-700/50 border border-gray-100 dark:border-gray-600">
                                         <div className="text-2xl text-[#FF8A3D]"><i className="fas fa-tools"></i></div>
                                         <div>
-                                            <h6 className="font-bold dark:text-white">Execute & Build</h6>
-                                            <p className="text-sm text-gray-500">Agile development and hands-on implementation with precision.</p>
+                                            <h6 className="font-bold text-gray-900 dark:text-white">Execute & Build</h6>
+                                            <p className="text-sm text-gray-500 dark:text-gray-400">Agile development and hands-on implementation with precision.</p>
                                         </div>
                                     </div>
                                     <div className="flex gap-4 p-4 rounded-2xl bg-gray-50 dark:bg-gray-700/50 border border-gray-100 dark:border-gray-600">
                                         <div className="text-2xl text-[#FF8A3D]"><i className="fas fa-chart-line"></i></div>
                                         <div>
-                                            <h6 className="font-bold dark:text-white">Optimize & Scale</h6>
-                                            <p className="text-sm text-gray-500">Continuous support and leveling up to ensure long-term ROI.</p>
+                                            <h6 className="font-bold text-gray-900 dark:text-white">Optimize & Scale</h6>
+                                            <p className="text-sm text-gray-500 dark:text-gray-400">Continuous support and leveling up to ensure long-term ROI.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -503,23 +598,23 @@ export default function Showcase() {
                             <div className="lg:col-span-2 grid md:grid-cols-2 gap-6">
                                 <div className="p-8 rounded-[2rem] bg-gray-50 dark:bg-gray-700/30 border border-gray-100 dark:border-gray-600 transition-all hover:-translate-y-2">
                                     <i className="fas fa-cube text-3xl text-purple-600 mb-6"></i>
-                                    <h6 className="text-xl font-bold mb-3 dark:text-white">Scalable Architecture</h6>
-                                    <p className="text-gray-600 dark:text-gray-400">Systems that grow from MVP to global powerhouse without breaking a sweat.</p>
+                                    <h6 className="text-xl font-bold mb-3 text-gray-900 dark:text-white">Scalable Architecture</h6>
+                                    <p className="text-gray-600 dark:text-gray-300">Systems that grow from MVP to global powerhouse without breaking a sweat.</p>
                                 </div>
                                 <div className="p-8 rounded-[2rem] bg-gray-50 dark:bg-gray-700/30 border border-gray-100 dark:border-gray-600 transition-all hover:-translate-y-2">
                                     <i className="fas fa-microchip text-3xl text-[#FF8A3D] mb-6"></i>
-                                    <h6 className="text-xl font-bold mb-3 dark:text-white">AI-Powered Workflows</h6>
-                                    <p className="text-gray-600 dark:text-gray-400">Leveraging Agentic AI and LLMs to automate complex business processes.</p>
+                                    <h6 className="text-xl font-bold mb-3 text-gray-900 dark:text-white">AI-Powered Workflows</h6>
+                                    <p className="text-gray-600 dark:text-gray-300">Leveraging Agentic AI and LLMs to automate complex business processes.</p>
                                 </div>
                                 <div className="p-8 rounded-[2rem] bg-gray-50 dark:bg-gray-700/30 border border-gray-100 dark:border-gray-600 transition-all hover:-translate-y-2">
                                     <i className="fas fa-users-gear text-3xl text-blue-600 mb-6"></i>
-                                    <h6 className="text-xl font-bold mb-3 dark:text-white">Hands-on Mentoring</h6>
-                                    <p className="text-gray-600 dark:text-gray-400">Direct access to seniors who've built enterprise systems for global brands.</p>
+                                    <h6 className="text-xl font-bold mb-3 text-gray-900 dark:text-white">Hands-on Mentoring</h6>
+                                    <p className="text-gray-600 dark:text-gray-300">Direct access to seniors who've built enterprise systems for global brands.</p>
                                 </div>
                                 <div className="p-8 rounded-[2rem] bg-gray-50 dark:bg-gray-700/30 border border-gray-100 dark:border-gray-600 transition-all hover:-translate-y-2">
                                     <i className="fas fa-briefcase text-3xl text-green-600 mb-6"></i>
-                                    <h6 className="text-xl font-bold mb-3 dark:text-white">Portfolio-Ready Outcomes</h6>
-                                    <p className="text-gray-600 dark:text-gray-400">Go beyond theory. Build projects that land jobs and win clients.</p>
+                                    <h6 className="text-xl font-bold mb-3 text-gray-900 dark:text-white">Portfolio-Ready Outcomes</h6>
+                                    <p className="text-gray-600 dark:text-gray-300">Go beyond theory. Build projects that land jobs and win clients.</p>
                                 </div>
                             </div>
                         </div>
@@ -573,12 +668,12 @@ export default function Showcase() {
                                 const imgSrc = courseImages[title] ?? "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80";
 
                                 return (
-                                    <div key={title} className="course-card bg-white p-6 rounded-lg shadow-md fade-in">
+                                    <div key={title} className="course-card bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md border border-gray-100 dark:border-gray-700 fade-in">
                                         <div className="mb-4">
                                             <img src={imgSrc} alt={title} className="rounded-lg w-full h-40 object-cover" />
                                         </div>
-                                        <h3 className="text-xl font-semibold mb-2">{title}</h3>
-                                        <p className="text-gray-600 mb-4 text-sm leading-relaxed">{course.learn[0]}</p>
+                                        <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">{title}</h3>
+                                        <p className="text-gray-600 dark:text-gray-300 mb-4 text-sm leading-relaxed">{course.learn[0]}</p>
                                         <div className="space-y-3">
                                             <div className="flex justify-between items-center">
                                                 <span className="text-[#FF8A3D] font-bold text-sm">{course.pricing.split(" for ")[0]}</span>
@@ -596,6 +691,118 @@ export default function Showcase() {
                     </div>
                 </section>
 
+                {/* Student Projects Showcase Section */}
+                <section className="my-16 md:my-24 scroll-mt-24" id="student-projects">
+                    <div className="container mx-auto px-4">
+                        <div className="text-center mb-12">
+                            <span className="text-[#FF8A3D] font-bold text-sm uppercase tracking-wider block mb-2">Alumni Projects</span>
+                            <h2 className="text-3xl md:text-4xl font-bold mb-4 gradient-heading inline-block">Student Projects Showcase</h2>
+                            <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+                                Explore real-world web applications built by our talented students during their training at Devtonic Academy.
+                            </p>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {studentProjects.map((project, idx) => (
+                                <div key={idx} className="group bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-md hover:shadow-xl border border-gray-100 dark:border-gray-700 transition-all duration-300 transform hover:-translate-y-2 flex flex-col h-full">
+                                    <div className="relative h-48 w-full overflow-hidden bg-gray-100 dark:bg-gray-900 border-b border-gray-100 dark:border-gray-700">
+                                        <img 
+                                            src={project.image} 
+                                            alt={project.title} 
+                                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                        />
+                                        <div className="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors pointer-events-none" />
+                                    </div>
+                                    
+                                    <div className="p-5 flex flex-col flex-grow">
+                                        <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-[#FF8A3D] transition-colors">
+                                            {project.title}
+                                        </h3>
+                                        <p className="text-sm text-gray-600 dark:text-gray-300 line-clamp-3 mb-4 flex-grow leading-relaxed">
+                                            {project.description}
+                                        </p>
+                                        
+                                        {/* Creator and Created Date below description */}
+                                        <div className="flex flex-wrap gap-2 mb-4 text-xs font-semibold">
+                                            {project.student && (
+                                                <span className="flex items-center gap-1.5 bg-gray-50 dark:bg-gray-700/50 text-gray-600 dark:text-gray-300 px-2.5 py-1 rounded-full">
+                                                    <i className="fas fa-graduation-cap text-[#FF8A3D] text-xs"></i>
+                                                    <span>by {project.student}</span>
+                                                </span>
+                                            )}
+                                            {project.date && (
+                                                <span className="flex items-center gap-1.5 bg-gray-50 dark:bg-gray-700/50 text-gray-600 dark:text-gray-300 px-2.5 py-1 rounded-full">
+                                                    <i className="far fa-calendar-alt text-[#FF8A3D] text-xs"></i>
+                                                    <span>{project.date}</span>
+                                                </span>
+                                            )}
+                                        </div>
+                                        
+                                        <div className="mt-auto pt-4 border-t border-gray-100 dark:border-gray-700 flex justify-between items-center">
+                                            <a 
+                                                href={project.url} 
+                                                target="_blank" 
+                                                rel="noopener noreferrer" 
+                                                className="text-sm font-bold text-[#FF8A3D] hover:text-[#E67A2E] flex items-center gap-1.5 transition-colors group/link"
+                                            >
+                                                <span>Visit Website</span>
+                                                <i className="fas fa-external-link-alt text-xs transition-transform group-hover/link:translate-x-0.5"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+
+                {/* Devtonic Team Products Section */}
+                <section className="my-16 md:my-24 scroll-mt-24 bg-gray-50/50 dark:bg-gray-900/30 py-16 border-t border-b border-gray-100 dark:border-gray-800" id="team-products">
+                    <div className="container mx-auto px-4">
+                        <div className="text-center mb-12">
+                            <span className="text-[#FF8A3D] font-bold text-sm uppercase tracking-wider block mb-2">Our Ventures</span>
+                            <h2 className="text-3xl md:text-4xl font-bold mb-4 gradient-heading inline-block">Products by Devtonic Team</h2>
+                            <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+                                Innovative tools and production-grade solutions designed, built, and maintained by the engineering team at Devtonic.
+                            </p>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                            {teamProducts.map((product, idx) => (
+                                <div key={idx} className="group bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl border border-gray-100 dark:border-gray-700 transition-all duration-500 transform hover:-translate-y-2 flex flex-col h-full">
+                                    <div className="relative h-52 w-full overflow-hidden bg-gray-100 dark:bg-gray-900 border-b border-gray-100 dark:border-gray-700">
+                                        <img 
+                                            src={product.image} 
+                                            alt={product.title} 
+                                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                        />
+                                        <div className="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors pointer-events-none" />
+                                    </div>
+                                    
+                                    <div className="p-6 flex flex-col flex-grow">
+                                        <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-[#FF8A3D] transition-colors">
+                                            {product.title}
+                                        </h3>
+                                        <p className="text-sm text-gray-600 dark:text-gray-300 mb-6 flex-grow leading-relaxed">
+                                            {product.description}
+                                        </p>
+                                        
+                                        <a 
+                                            href={product.url} 
+                                            target="_blank" 
+                                            rel="noopener noreferrer" 
+                                            className="w-full py-3 bg-[rgb(143,49,138)] hover:bg-[#FF8A3D] text-white font-bold rounded-xl text-center transition-all duration-300 shadow hover:shadow-lg flex items-center justify-center gap-2 mt-auto"
+                                        >
+                                            <span>Launch Product</span>
+                                            <i className="fas fa-external-link-alt text-xs text-white"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+
                 {/* Learn with Devtonic (YouTube) */}
                 <section className="my-16 scroll-mt-24" id="tutorials">
                     <div className="container mx-auto px-4">
@@ -606,7 +813,7 @@ export default function Showcase() {
 
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                             {/* Tutorial 1 */}
-                            <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow flex flex-col h-full fade-in cursor-pointer group" onClick={() => window.open('https://www.youtube.com/watch?v=jRSmmbH2hJQ', '_blank')}>
+                            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden hover:shadow-xl border border-gray-100 dark:border-gray-700 transition-shadow flex flex-col h-full fade-in cursor-pointer group" onClick={() => window.open('https://www.youtube.com/watch?v=jRSmmbH2hJQ', '_blank')}>
                                 <div className="relative h-48 w-full overflow-hidden">
                                     <img src="https://i.ytimg.com/an_webp/jRSmmbH2hJQ/mqdefault_6s.webp?du=3000&sqp=CIy19cwG&rs=AOn4CLDJziNGWsNZQZA3fgc98RmaJ84ioA" alt="Vibe Coding Future" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                                     <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
@@ -615,13 +822,13 @@ export default function Showcase() {
                                     <div className="absolute bottom-2 right-2 bg-black/80 text-white text-xs font-bold px-2 py-1 rounded">45:32</div>
                                 </div>
                                 <div className="p-4 flex flex-col flex-grow">
-                                    <h4 className="font-bold text-gray-800 line-clamp-2 mb-2 group-hover:text-[#FF8A3D] transition-colors">Is "Vibe Coding" the Future of Power Apps? Build Professional Apps in Minutes with AI.</h4>
-                                    <p className="text-sm text-gray-600 line-clamp-2 flex-grow">I’ll be demonstrating how to go from a blank canvas to a fully animated, AI-generated Power App.</p>
+                                    <h4 className="font-bold text-gray-900 dark:text-white line-clamp-2 mb-2 group-hover:text-[#FF8A3D] transition-colors">Is "Vibe Coding" the Future of Power Apps? Build Professional Apps in Minutes with AI.</h4>
+                                    <p className="text-sm text-gray-600 dark:text-gray-300 line-clamp-2 flex-grow">I’ll be demonstrating how to go from a blank canvas to a fully animated, AI-generated Power App.</p>
                                 </div>
                             </div>
 
                             {/* Tutorial 2 */}
-                            <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow flex flex-col h-full fade-in cursor-pointer group" onClick={() => window.open('https://www.youtube.com/watch?v=iqc4kKRBHwE', '_blank')}>
+                            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden hover:shadow-xl border border-gray-100 dark:border-gray-700 transition-shadow flex flex-col h-full fade-in cursor-pointer group" onClick={() => window.open('https://www.youtube.com/watch?v=iqc4kKRBHwE', '_blank')}>
                                 <div className="relative h-48 w-full overflow-hidden">
                                     <img src="https://i.ytimg.com/vi/iqc4kKRBHwE/maxresdefault.jpg" alt="Sharepoint Setup" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                                     <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
@@ -630,13 +837,13 @@ export default function Showcase() {
                                     <div className="absolute bottom-2 right-2 bg-black/80 text-white text-xs font-bold px-2 py-1 rounded">45:32</div>
                                 </div>
                                 <div className="p-4 flex flex-col flex-grow">
-                                    <h4 className="font-bold text-gray-800 line-clamp-2 mb-2 group-hover:text-[#FF8A3D] transition-colors">Easy SharePoint Setup: Create Sites & Lists + PowerApps Made Simple</h4>
-                                    <p className="text-sm text-gray-600 line-clamp-2 flex-grow">Supercharge Your Workflow with SharePoint + PowerApps! Hands-on tutorial.</p>
+                                    <h4 className="font-bold text-gray-900 dark:text-white line-clamp-2 mb-2 group-hover:text-[#FF8A3D] transition-colors">Easy SharePoint Setup: Create Sites & Lists + PowerApps Made Simple</h4>
+                                    <p className="text-sm text-gray-600 dark:text-gray-300 line-clamp-2 flex-grow">Supercharge Your Workflow with SharePoint + PowerApps! Hands-on tutorial.</p>
                                 </div>
                             </div>
 
                             {/* Tutorial 3 */}
-                            <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow flex flex-col h-full fade-in cursor-pointer group" onClick={() => window.open('https://www.youtube.com/watch?v=meEFY3-hff8&t=40s', '_blank')}>
+                            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden hover:shadow-xl border border-gray-100 dark:border-gray-700 transition-shadow flex flex-col h-full fade-in cursor-pointer group" onClick={() => window.open('https://www.youtube.com/watch?v=meEFY3-hff8&t=40s', '_blank')}>
                                 <div className="relative h-48 w-full overflow-hidden">
                                     <img src="https://i.ytimg.com/vi/meEFY3-hff8/maxresdefault.jpg" alt="PowerApps Sorting" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                                     <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
@@ -645,8 +852,8 @@ export default function Showcase() {
                                     <div className="absolute bottom-2 right-2 bg-black/80 text-white text-xs font-bold px-2 py-1 rounded">52:48</div>
                                 </div>
                                 <div className="p-4 flex flex-col flex-grow">
-                                    <h4 className="font-bold text-gray-800 line-clamp-2 mb-2 group-hover:text-[#FF8A3D] transition-colors">PowerApps Sorting Hack: Build Custom Reordering Logic in Minutes!</h4>
-                                    <p className="text-sm text-gray-600 line-clamp-2 flex-grow">Struggling with Realtime sorting and item reordering in PowerApps?</p>
+                                    <h4 className="font-bold text-gray-900 dark:text-white line-clamp-2 mb-2 group-hover:text-[#FF8A3D] transition-colors">PowerApps Sorting Hack: Build Custom Reordering Logic in Minutes!</h4>
+                                    <p className="text-sm text-gray-600 dark:text-gray-300 line-clamp-2 flex-grow">Struggling with Realtime sorting and item reordering in PowerApps?</p>
                                 </div>
                             </div>
                         </div>
@@ -667,52 +874,52 @@ export default function Showcase() {
                         </div>
 
                         <div className="grid md:grid-cols-3 gap-8">
-                            <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 relative fade-in">
+                            <div className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700 relative fade-in">
                                 <i className="fas fa-quote-left text-4xl text-[#FF8A3D]/20 absolute top-6 left-6"></i>
                                 <div className="relative z-10">
                                     <div className="flex text-yellow-400 mb-4">
                                         <i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i>
                                     </div>
-                                    <p className="text-gray-700 italic mb-6">"The Devtonic team totally revolutionized how we handle Vendor Management. The automated workflows they built on the Power Platform saved us countless hours of manual data entry."</p>
+                                    <p className="text-gray-700 dark:text-gray-300 italic mb-6">"The Devtonic team totally revolutionized how we handle Vendor Management. The automated workflows they built on the Power Platform saved us countless hours of manual data entry."</p>
                                     <div className="flex items-center gap-4">
-                                        <div className="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center text-gray-500 font-bold">ZT</div>
+                                        <div className="w-12 h-12 bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center text-gray-500 dark:text-gray-300 font-bold">ZT</div>
                                         <div>
-                                            <h4 className="font-bold text-gray-800">Operations Lead</h4>
-                                            <span className="text-sm text-gray-500">ZoomTan Inc.</span>
+                                            <h4 className="font-bold text-gray-800 dark:text-white">Operations Lead</h4>
+                                            <span className="text-sm text-gray-500 dark:text-gray-400">ZoomTan Inc.</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 relative fade-in">
+                            <div className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700 relative fade-in">
                                 <i className="fas fa-quote-left text-4xl text-[#FF8A3D]/20 absolute top-6 left-6"></i>
                                 <div className="relative z-10">
                                     <div className="flex text-yellow-400 mb-4">
                                         <i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i>
                                     </div>
-                                    <p className="text-gray-700 italic mb-6">"I joined the Skool community as a beginner and within months I was building my own canvas apps. The mentorship and YouTube tutorials are simply world-class!"</p>
+                                    <p className="text-gray-700 dark:text-gray-300 italic mb-6">"I joined the Skool community as a beginner and within months I was building my own canvas apps. The mentorship and YouTube tutorials are simply world-class!"</p>
                                     <div className="flex items-center gap-4">
-                                        <div className="w-12 h-12 bg-purple-100 text-[#FF8A3D] rounded-full flex items-center justify-center font-bold">M</div>
+                                        <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 text-[#FF8A3D] rounded-full flex items-center justify-center font-bold">M</div>
                                         <div>
-                                            <h4 className="font-bold text-gray-800">Marcus T.</h4>
-                                            <span className="text-sm text-gray-500">Academy Student</span>
+                                            <h4 className="font-bold text-gray-800 dark:text-white">Marcus T.</h4>
+                                            <span className="text-sm text-gray-500 dark:text-gray-400">Academy Student</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 relative fade-in">
+                            <div className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700 relative fade-in">
                                 <i className="fas fa-quote-left text-4xl text-[#FF8A3D]/20 absolute top-6 left-6"></i>
                                 <div className="relative z-10">
                                     <div className="flex text-yellow-400 mb-4">
                                         <i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i>
                                     </div>
-                                    <p className="text-gray-700 italic mb-6">"Devtonic developed a flawless Contact App syncing over 8,000 active Azure profiles. The speed, security, and scale of their solutions are unmatched."</p>
+                                    <p className="text-gray-700 dark:text-gray-300 italic mb-6">"Devtonic developed a flawless Contact App syncing over 8,000 active Azure profiles. The speed, security, and scale of their solutions are unmatched."</p>
                                     <div className="flex items-center gap-4">
-                                        <div className="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center text-gray-500 font-bold">IF</div>
+                                        <div className="w-12 h-12 bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center text-gray-500 dark:text-gray-300 font-bold">IF</div>
                                         <div>
-                                            <h4 className="font-bold text-gray-800">IT Director</h4>
-                                            <span className="text-sm text-gray-500">IFPMA</span>
+                                            <h4 className="font-bold text-gray-800 dark:text-white">IT Director</h4>
+                                            <span className="text-sm text-gray-500 dark:text-gray-400">IFPMA</span>
                                         </div>
                                     </div>
                                 </div>
@@ -725,7 +932,7 @@ export default function Showcase() {
                 <section id="contact" className="py-24 bg-[#853183] relative overflow-hidden">
                     <div className="absolute inset-0 opacity-10 pointer-events-none" style={{ backgroundImage: "radial-gradient(circle at center, white 2px, transparent 2px)", backgroundSize: "32px 32px" }}></div>
                     <div className="container mx-auto px-4 relative z-10">
-                        <div className="max-w-6xl mx-auto bg-white rounded-[3rem] shadow-2xl overflow-hidden flex flex-col lg:flex-row">
+                        <div className="max-w-6xl mx-auto bg-white dark:bg-gray-800 rounded-[3rem] shadow-2xl overflow-hidden flex flex-col lg:flex-row border border-gray-100 dark:border-gray-700">
                             <div className="lg:w-1/2 p-8 md:p-16 bg-gray-50 dark:bg-gray-800/50">
                                 <h2 className="text-[#FF8A3D] font-black uppercase tracking-widest text-sm mb-4">Get Started</h2>
                                 <h3 className="text-4xl md:text-5xl font-black text-gray-900 dark:text-white mb-6 leading-tight">Ready to Transform Your Tech Journey?</h3>
@@ -752,16 +959,16 @@ export default function Showcase() {
                                     <div className="grid md:grid-cols-2 gap-6">
                                         <div className="space-y-2">
                                             <label className="text-sm font-black uppercase tracking-widest text-gray-400">Full Name</label>
-                                            <input type="text" name="name" required className="w-full px-6 py-4 rounded-2xl bg-gray-50 border-transparent focus:bg-white focus:ring-2 focus:ring-[#FF8A3D] transition-all outline-none" placeholder="John Doe" />
+                                            <input type="text" name="name" required className="w-full px-6 py-4 rounded-2xl bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white border-transparent focus:bg-white dark:focus:bg-gray-600 focus:ring-2 focus:ring-[#FF8A3D] transition-all outline-none" placeholder="John Doe" />
                                         </div>
                                         <div className="space-y-2">
                                             <label className="text-sm font-black uppercase tracking-widest text-gray-400">Email Address</label>
-                                            <input type="email" name="email" required className="w-full px-6 py-4 rounded-2xl bg-gray-50 border-transparent focus:bg-white focus:ring-2 focus:ring-[#FF8A3D] transition-all outline-none" placeholder="john@example.com" />
+                                            <input type="email" name="email" required className="w-full px-6 py-4 rounded-2xl bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white border-transparent focus:bg-white dark:focus:bg-gray-600 focus:ring-2 focus:ring-[#FF8A3D] transition-all outline-none" placeholder="john@example.com" />
                                         </div>
                                     </div>
                                     <div className="space-y-2">
                                         <label className="text-sm font-black uppercase tracking-widest text-gray-400">Your Message</label>
-                                        <textarea name="message" rows={4} required className="w-full px-6 py-4 rounded-2xl bg-gray-50 border-transparent focus:bg-white focus:ring-2 focus:ring-[#FF8A3D] transition-all outline-none resize-none" placeholder="How can we help you?"></textarea>
+                                        <textarea name="message" rows={4} required className="w-full px-6 py-4 rounded-2xl bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white border-transparent focus:bg-white dark:focus:bg-gray-600 focus:ring-2 focus:ring-[#FF8A3D] transition-all outline-none resize-none" placeholder="How can we help you?"></textarea>
                                     </div>
                                     <button type="submit" disabled={isSubmitting} className="w-full py-5 rounded-2xl bg-gray-900 text-white font-black text-lg transition-all hover:bg-[#FF8A3D] hover:shadow-[0_10px_30px_rgba(255,138,61,0.3)] disabled:opacity-50">
                                         {isSubmitting ? <i className="fas fa-spinner fa-spin mr-2"></i> : <i className="fas fa-paper-plane mr-2"></i>}
@@ -835,10 +1042,10 @@ export default function Showcase() {
             {/* Course Modal */}
             {selectedCourse && (
                 <div className="fixed inset-0 bg-black/60 flex items-center justify-center p-4 z-[100] backdrop-blur-sm transition-opacity" onClick={() => setSelectedCourse(null)}>
-                    <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-2xl max-w-lg w-full p-8 relative transform transition-transform scale-100" onClick={(e) => e.stopPropagation()}>
+                    <div id="courseModal" className="bg-white dark:bg-gray-800 rounded-3xl shadow-2xl max-w-lg w-full p-8 relative transform transition-transform scale-100" onClick={(e) => e.stopPropagation()}>
                         <button
                             onClick={() => setSelectedCourse(null)}
-                            className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 text-gray-500 hover:bg-red-100 hover:text-red-500 transition-colors"
+                            className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-300 hover:bg-red-100 dark:hover:bg-red-900/30 hover:text-red-500 dark:hover:text-red-400 transition-colors"
                         >
                             <i className="fas fa-times"></i>
                         </button>
